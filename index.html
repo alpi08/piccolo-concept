@@ -280,59 +280,69 @@
     .about-image { flex: 1 1 350px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--golge-koyu); }
     .about-image img { width: 100%; display: block; }
 
-    /* ===== YENİ MENÜ TASARIMI (SADE) ===== */
+    /* ===== YENİ MENÜ TASARIMI (KATEGORİLİ) ===== */
     .menu-section { padding: 4rem 1.5rem; background: var(--beyaz); }
-    .menu-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
-      gap: 0.8rem; 
-      max-width: 900px; 
-      margin: auto; 
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      max-width: 1000px;
+      margin: auto;
     }
-    .menu-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 1rem 0.5rem;
-      border-bottom: 1px dashed #d9c7b2;
+    .menu-category {
+      background: var(--krem);
+      border-radius: var(--radius-yumusak);
+      padding: 2rem 1.8rem;
+      box-shadow: var(--golge);
+      border: 1px solid #efe2d3;
       transition: var(--gecis);
-      background: transparent;
-      border-radius: 0;
-      box-shadow: none;
-      text-align: left;
     }
-    .menu-card:last-child {
-      border-bottom: none;
+    .menu-category:hover {
+      box-shadow: var(--golge-koyu);
+      transform: translateY(-4px);
     }
-    .menu-card:hover {
-      border-bottom-color: var(--kahve);
-      transform: translateX(5px);
-      box-shadow: none;
+    .menu-category h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--koyu-kahve);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--acik-kahve);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .menu-info {
+    .menu-category h3 i {
+      color: var(--kahve);
+      font-size: 1.5rem;
+    }
+    .menu-list {
+      list-style: none;
       display: flex;
       flex-direction: column;
+      gap: 0.6rem;
     }
-    .menu-info h4 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
+    .menu-list li {
+      font-size: 1rem;
+      font-weight: 500;
       color: var(--koyu-kahve);
-      margin-bottom: 0.15rem;
-      letter-spacing: 0.3px;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed #d9c7b2;
+      transition: var(--gecis);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .menu-desc {
-      font-size: 0.85rem;
-      color: #8b7a6b;
-      margin: 0;
-    }
-    .menu-price {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
+    .menu-list li::before {
+      content: '•';
       color: var(--kahve);
-      white-space: nowrap;
-      margin-left: 1.5rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .menu-list li:hover {
+      color: var(--kahve);
+      transform: translateX(5px);
+      border-bottom-color: var(--kahve);
     }
 
     .gallery-section { padding: 4rem 1.5rem; background: var(--acik-kahve); }
@@ -383,8 +393,8 @@
       .cup { font-size: 5rem; }
       .section-title h2 { font-size: 2rem; }
       
-      .menu-grid { grid-template-columns: 1fr; gap: 0.5rem; }
-      .menu-card { padding: 0.9rem 0.2rem; }
+      .menu-container { grid-template-columns: 1fr; gap: 1.5rem; }
+      .menu-category { padding: 1.5rem; }
       
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
       .review-card { min-width: 240px; padding: 1.4rem; }
@@ -458,69 +468,51 @@
     </div>
   </section>
 
-  <!-- YENİ SADE MENÜ -->
+  <!-- YENİ MENÜ: SICAK & SOĞUK İÇECEKLER -->
   <section class="menu-section" id="menu">
     <div class="section-title reveal reveal-up">
-      <h2 data-i18n="menu_title">Lezzet Menüsü</h2>
+      <h2 data-i18n="menu_title">İçecek Menüsü</h2>
       <div class="alt-cizgi"></div>
-      <p data-i18n="menu_sub">Taze & el yapımı seçenekler</p>
+      <p data-i18n="menu_sub">Sıcak & Soğuk Seçenekler</p>
     </div>
-    <div class="menu-grid">
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4>Espresso</h4>
-          <p class="menu-desc" data-i18n="menu_espresso">Yoğun İtalyan klasiği</p>
-        </div>
-        <span class="menu-price">₺42</span>
+    <div class="menu-container">
+      <!-- Sıcak İçecekler -->
+      <div class="menu-category reveal reveal-left">
+        <h3><i class="fas fa-mug-hot"></i> <span data-i18n="hot_drinks">Sıcak İçecekler</span></h3>
+        <ul class="menu-list">
+          <li>Espresso</li>
+          <li>Espresso Macchiato</li>
+          <li>Double Espresso</li>
+          <li>Americano</li>
+          <li>Cortado</li>
+          <li>Latte</li>
+          <li>Flat White</li>
+          <li>Cappuccino</li>
+          <li>Filter Coffee</li>
+          <li>Turkish Coffee</li>
+          <li>Caffè Mocha</li>
+          <li>Piccolo Latte</li>
+          <li>Vanilla Latte</li>
+          <li>White Chocolate Mocha</li>
+          <li>Caramel Latte</li>
+          <li>Chai Tea Latte</li>
+          <li>Hot Chocolate</li>
+          <li>Herbal Tea</li>
+          <li>Extra Espresso Shot</li>
+        </ul>
       </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4>Americano</h4>
-          <p class="menu-desc" data-i18n="menu_americano">Espresso üzerine sıcak su</p>
-        </div>
-        <span class="menu-price">₺48</span>
-      </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4>Latte</h4>
-          <p class="menu-desc" data-i18n="menu_latte">İpek gibi süt köpüğü</p>
-        </div>
-        <span class="menu-price">₺55</span>
-      </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4>Cappuccino</h4>
-          <p class="menu-desc" data-i18n="menu_cappuccino">Bol köpük, tarçın</p>
-        </div>
-        <span class="menu-price">₺55</span>
-      </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4 data-i18n="menu_filter">Filtre Kahve</h4>
-          <p class="menu-desc" data-i18n="menu_filter_desc">Günün özel çekirdeği</p>
-        </div>
-        <span class="menu-price">₺45</span>
-      </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4 data-i18n="menu_turkish">Türk Kahvesi</h4>
-          <p class="menu-desc" data-i18n="menu_turkish_desc">Bol köpüklü, lokumlu</p>
-        </div>
-        <span class="menu-price">₺38</span>
-      </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4>Cheesecake</h4>
-          <p class="menu-desc" data-i18n="menu_cheesecake">Fırında, mevsim meyveli</p>
-        </div>
-        <span class="menu-price">₺65</span>
-      </div>
-      <div class="menu-card reveal reveal-up">
-        <div class="menu-info">
-          <h4>Kruvasan</h4>
-          <p class="menu-desc" data-i18n="menu_croissant">Tereyağlı, çikolatalı</p>
-        </div>
-        <span class="menu-price">₺50</span>
+      <!-- Soğuk İçecekler -->
+      <div class="menu-category reveal reveal-right">
+        <h3><i class="fas fa-snowflake"></i> <span data-i18n="cold_drinks">Soğuk İçecekler</span></h3>
+        <ul class="menu-list">
+          <li>Iced Caffè Latte</li>
+          <li>Iced Coffee Americano</li>
+          <li>Iced Caramel Latte</li>
+          <li>Iced Caffè Mocha</li>
+          <li>Iced White Chocolate Mocha</li>
+          <li>Iced Chai Tea Latte</li>
+          <li>Iced Raspberry</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -537,7 +529,7 @@
   </section>
 
   <section class="reviews-section" id="reviews">
-    <div class="section-title reveal reveal-up"><h2 data-i18n="reviews_title">Misafir Yorumları</h2><div class="alt-cizgi"></div><p data-i18n="reviews_sub">Google’da bizi değerlendirenler</p></div>
+    <div class="section-title reveal reveal-up"><h2 data-i18n="reviews_title">Misafir Yorumları</h2><div class="alt-cizgi"></div><p data-i18n="reviews_sub">Google'da bizi değerlendirenler</p></div>
     <div class="reviews-track" id="reviewsTrack"></div>
   </section>
 
@@ -581,12 +573,10 @@
           about_title: "Hikayemiz", about_sub: "Kahveye duyulan tutkuyla kurulmuş sıcacık bir durak",
           about_heading: "Piccolo, İtalyanca \"küçük\" demek...",
           about_text: "2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, beyaz ve kahverenginin huzur veren uyumuyla tasarlandı.",
-          menu_title: "Lezzet Menüsü", menu_sub: "Taze & el yapımı seçenekler",
-          menu_espresso: "Yoğun İtalyan klasiği", menu_americano: "Espresso üzerine sıcak su", menu_latte: "İpek gibi süt köpüğü",
-          menu_cappuccino: "Bol köpük, tarçın", menu_filter: "Filtre Kahve", menu_filter_desc: "Günün özel çekirdeği",
-          menu_turkish: "Türk Kahvesi", menu_turkish_desc: "Bol köpüklü, lokumlu", menu_cheesecake: "Fırında, mevsim meyveli",
-          menu_croissant: "Tereyağlı, çikolatalı", gallery_title: "Kareler", gallery_sub: "Piccolo'dan anlar",
-          reviews_title: "Misafir Yorumları", reviews_sub: "Google’da bizi değerlendirenler",
+          menu_title: "İçecek Menüsü", menu_sub: "Sıcak & Soğuk Seçenekler",
+          hot_drinks: "Sıcak İçecekler", cold_drinks: "Soğuk İçecekler",
+          gallery_title: "Kareler", gallery_sub: "Piccolo'dan anlar",
+          reviews_title: "Misafir Yorumları", reviews_sub: "Google'da bizi değerlendirenler",
           hours_title: "Çalışma Saatleri", day_mon: "Pazartesi", day_tue: "Salı", day_wed: "Çarşamba", day_thu: "Perşembe",
           day_fri: "Cuma", day_sat: "Cumartesi", day_sun: "Pazar", closed: "Kapalı",
           address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Küçük mola, büyük lezzet."
@@ -599,11 +589,9 @@
           about_title: "Our Story", about_sub: "A warm stop built on passion for coffee",
           about_heading: "Piccolo means \"small\" in Italian...",
           about_text: "Since 2018, Piccolo Cafe welcomes guests with homemade flavors and carefully selected beans, designed with the peaceful harmony of white and brown.",
-          menu_title: "Taste Menu", menu_sub: "Fresh & handmade options",
-          menu_espresso: "Intense Italian classic", menu_americano: "Espresso with hot water", menu_latte: "Silky milk foam",
-          menu_cappuccino: "Rich foam, cinnamon", menu_filter: "Filter Coffee", menu_filter_desc: "Daily special beans",
-          menu_turkish: "Turkish Coffee", menu_turkish_desc: "With thick foam, delight", menu_cheesecake: "Baked, seasonal fruits",
-          menu_croissant: "Buttery, chocolate option", gallery_title: "Moments", gallery_sub: "Frames from Piccolo",
+          menu_title: "Drink Menu", menu_sub: "Hot & Cold Options",
+          hot_drinks: "Hot Drinks", cold_drinks: "Cold Drinks",
+          gallery_title: "Moments", gallery_sub: "Frames from Piccolo",
           reviews_title: "Guest Reviews", reviews_sub: "What people say on Google",
           hours_title: "Working Hours", day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday",
           day_fri: "Friday", day_sat: "Saturday", day_sun: "Sunday", closed: "Closed",
@@ -617,11 +605,9 @@
           about_title: "Наша история", about_sub: "Тёплое место, рождённое любовью к кофе",
           about_heading: "Piccolo по-итальянски «маленький»...",
           about_text: "С 2018 года Piccolo Cafe встречает гостей домашними угощениями и тщательно отобранными зёрнами.",
-          menu_title: "Меню", menu_sub: "Свежие и ручные варианты",
-          menu_espresso: "Насыщенная итальянская классика", menu_americano: "Эспрессо с горячей водой", menu_latte: "Шелковистая пенка",
-          menu_cappuccino: "Пышная пенка, корица", menu_filter: "Фильтр-кофе", menu_filter_desc: "Специальные зёрна дня",
-          menu_turkish: "Турецкий кофе", menu_turkish_desc: "С густой пенкой, рахат-лукум", menu_cheesecake: "Запечённый, с фруктами",
-          menu_croissant: "Масляный, с шоколадом", gallery_title: "Кадры", gallery_sub: "Моменты из Piccolo",
+          menu_title: "Меню напитков", menu_sub: "Горячие и холодные",
+          hot_drinks: "Горячие напитки", cold_drinks: "Холодные напитки",
+          gallery_title: "Кадры", gallery_sub: "Моменты из Piccolo",
           reviews_title: "Отзывы", reviews_sub: "Оценки в Google",
           hours_title: "Часы работы", day_mon: "Пн", day_tue: "Вт", day_wed: "Ср", day_thu: "Чт", day_fri: "Пт", day_sat: "Сб", day_sun: "Вс", closed: "Закрыто",
           address: "Caferağa Mah. Moda Cad. No:12, Кадыкёй", footer_text: "© 2025 Piccolo Cafe • Маленький перерыв, большой вкус."
@@ -634,11 +620,9 @@
           about_title: "Unsere Geschichte", about_sub: "Ein warmer Ort aus Leidenschaft für Kaffee",
           about_heading: "Piccolo bedeutet \"klein\" auf Italienisch...",
           about_text: "Seit 2018 empfängt das Piccolo Cafe Gäste mit hausgemachten Leckereien und ausgewählten Bohnen.",
-          menu_title: "Genussmenü", menu_sub: "Frische & handgemachte Optionen",
-          menu_espresso: "Intensiver italienischer Klassiker", menu_americano: "Espresso mit heißem Wasser", menu_latte: "Seidiger Milchschaum",
-          menu_cappuccino: "Viel Schaum, Zimt", menu_filter: "Filterkaffee", menu_filter_desc: "Tägliche Spezialbohnen",
-          menu_turkish: "Türkischer Kaffee", menu_turkish_desc: "Mit dickem Schaum, Lokum", menu_cheesecake: "Gebacken, mit Früchten",
-          menu_croissant: "Buttrig, mit Schokolade", gallery_title: "Momente", gallery_sub: "Eindrücke aus dem Piccolo",
+          menu_title: "Getränkekarte", menu_sub: "Heiße & kalte Optionen",
+          hot_drinks: "Heiße Getränke", cold_drinks: "Kalte Getränke",
+          gallery_title: "Momente", gallery_sub: "Eindrücke aus dem Piccolo",
           reviews_title: "Bewertungen", reviews_sub: "Google-Bewertungen",
           hours_title: "Öffnungszeiten", day_mon: "Montag", day_tue: "Dienstag", day_wed: "Mittwoch", day_thu: "Donnerstag",
           day_fri: "Freitag", day_sat: "Samstag", day_sun: "Sonntag", closed: "Geschlossen",
@@ -652,11 +636,9 @@
           about_title: "La nostra storia", about_sub: "Un caldo rifugio nato dalla passione per il caffè",
           about_heading: "Piccolo in italiano significa \"piccolo\"...",
           about_text: "Dal 2018, Piccolo Cafe accoglie gli ospiti con sapori fatti in casa e chicchi selezionati.",
-          menu_title: "Menu del gusto", menu_sub: "Opzioni fresche e artigianali",
-          menu_espresso: "Intenso classico italiano", menu_americano: "Espresso con acqua calda", menu_latte: "Schiuma di latte setosa",
-          menu_cappuccino: "Tanta schiuma, cannella", menu_filter: "Caffè filtro", menu_filter_desc: "Miscela speciale del giorno",
-          menu_turkish: "Caffè turco", menu_turkish_desc: "Con schiuma densa, lokum", menu_cheesecake: "Al forno, frutta di stagione",
-          menu_croissant: "Burroso, con cioccolato", gallery_title: "Immagini", gallery_sub: "Momenti da Piccolo",
+          menu_title: "Menu bevande", menu_sub: "Opzioni calde e fredde",
+          hot_drinks: "Bevande calde", cold_drinks: "Bevande fredde",
+          gallery_title: "Immagini", gallery_sub: "Momenti da Piccolo",
           reviews_title: "Recensioni", reviews_sub: "Cosa dicono su Google",
           hours_title: "Orari", day_mon: "Lunedì", day_tue: "Martedì", day_wed: "Mercoledì", day_thu: "Giovedì",
           day_fri: "Venerdì", day_sat: "Sabato", day_sun: "Domenica", closed: "Chiuso",
