@@ -28,7 +28,6 @@
       --kahve: #8b5e3c;
       --koyu-kahve: #5c3d2e;
       --cok-koyu: #3b271d;
-      --altin: #b99464;
       --golge: 0 15px 35px rgba(60, 30, 10, 0.08);
       --golge-koyu: 0 25px 45px rgba(30, 15, 5, 0.18);
       --radius: 22px;
@@ -53,7 +52,7 @@
       color: white;
     }
 
-    /* ===== SCROLL REVEAL ÇEŞİTLERİ ===== */
+    /* Scroll reveal çeşitleri */
     .reveal {
       opacity: 0;
       transition: opacity 0.8s ease, transform 0.8s ease;
@@ -68,7 +67,7 @@
       transform: translate(0) scale(1);
     }
 
-    /* ===== HEADER (scroll ile küçülür) ===== */
+    /* ===== HEADER ===== */
     .header {
       position: fixed;
       top: 0;
@@ -111,7 +110,6 @@
       justify-content: center;
       border-radius: 50%;
       box-shadow: 0 6px 15px rgba(140, 90, 40, 0.2);
-      transition: all 0.3s;
       animation: softPulse 3s infinite;
     }
     @keyframes softPulse {
@@ -130,16 +128,22 @@
       font-style: italic;
     }
 
+    .nav-and-lang {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
     .nav-links {
       display: flex;
-      gap: 2.4rem;
+      gap: 2rem;
       list-style: none;
     }
     .nav-links a {
       text-decoration: none;
       font-weight: 500;
       color: var(--koyu-kahve);
-      font-size: 1rem;
+      font-size: 0.95rem;
       position: relative;
       padding: 0.3rem 0;
     }
@@ -154,6 +158,69 @@
       transition: width 0.3s ease;
     }
     .nav-links a:hover::after { width: 100%; }
+
+    /* Dil seçici */
+    .lang-switcher {
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .lang-btn {
+      background: rgba(245, 235, 224, 0.7);
+      border: 1px solid var(--acik-kahve);
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      color: var(--koyu-kahve);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    .lang-btn i { font-size: 0.9rem; }
+    .lang-btn:hover { background: var(--acik-kahve); border-color: var(--orta-kahve); }
+
+    .lang-dropdown {
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      padding: 0.5rem 0;
+      min-width: 150px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      list-style: none;
+      z-index: 1001;
+      border: 1px solid #efe2d3;
+    }
+    .lang-dropdown.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .lang-dropdown li button {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      text-align: left;
+      font-size: 0.9rem;
+      color: var(--koyu-kahve);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background 0.2s;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .lang-dropdown li button:hover { background: var(--krem); color: var(--kahve); }
+    .lang-dropdown li button.active { font-weight: 700; color: var(--kahve); }
 
     .hamburger {
       display: none;
@@ -171,12 +238,12 @@
       transition: 0.3s;
     }
 
-    /* ===== HERO (PARALLAX HİSSİ + YÜZEN ÇEKİRDEKLER) ===== */
+    /* ===== HERO ===== */
     .hero {
       min-height: 100vh;
       background: linear-gradient(105deg, rgba(255,255,255,0.88) 20%, rgba(245,235,224,0.78) 100%), 
                   url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&auto=format&fit=crop') center/cover no-repeat;
-      background-attachment: fixed; /* hafif parallax */
+      background-attachment: fixed;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -187,7 +254,6 @@
       overflow: hidden;
     }
 
-    /* yüzen kahve çekirdekleri */
     .floating-beans {
       position: absolute;
       top: 0;
@@ -262,8 +328,6 @@
       text-decoration: none;
       transition: all 0.35s;
       letter-spacing: 0.4px;
-      position: relative;
-      overflow: hidden;
     }
     .btn-primary {
       background: var(--kahve);
@@ -283,7 +347,6 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* bardaklar */
     .hero-cups {
       margin-top: auto;
       position: relative;
@@ -313,108 +376,38 @@
       100% { transform: rotate(32deg) translateY(0); }
     }
 
-    /* ===== BÖLÜM ORTAK ===== */
+    /* Bölüm stilleri öncekiyle aynı */
     .section-title { text-align: center; margin-bottom: 3.8rem; }
-    .section-title h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      color: var(--koyu-kahve);
-      margin-bottom: 0.5rem;
-    }
-    .alt-cizgi {
-      width: 80px;
-      height: 3px;
-      background: var(--kahve);
-      margin: 0.7rem auto 1.2rem;
-      border-radius: 5px;
-    }
+    .section-title h2 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--koyu-kahve); margin-bottom: 0.5rem; }
+    .alt-cizgi { width: 80px; height: 3px; background: var(--kahve); margin: 0.7rem auto 1.2rem; border-radius: 5px; }
 
-    /* ===== HAKKIMIZDA ===== */
     .about-section { padding: 5rem 2rem; background: var(--krem); }
     .about-grid { display: flex; flex-wrap: wrap; gap: 3rem; max-width: 1150px; margin: auto; align-items: center; }
     .about-text { flex: 1 1 400px; }
-    .about-image {
-      flex: 1 1 400px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--golge-koyu);
-      transition: transform 0.4s;
-    }
-    .about-image:hover { transform: scale(1.02) rotate(0.5deg); }
+    .about-image { flex: 1 1 400px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--golge-koyu); }
+    .about-image img { width: 100%; display: block; transition: transform 0.6s; }
+    .about-image:hover img { transform: scale(1.05); }
 
-    /* ===== MENÜ (3D HOVER) ===== */
     .menu-section { padding: 5rem 2rem; background: var(--beyaz); }
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.2rem; max-width: 1250px; margin: auto; }
-    .menu-card {
-      background: var(--krem);
-      border-radius: var(--radius-yumusak);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      box-shadow: var(--golge);
-      transition: transform 0.4s, box-shadow 0.4s;
-      border: 1px solid #efe2d3;
-      position: relative;
-      overflow: hidden;
-      cursor: default;
-    }
-    .menu-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(200,160,120,0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
+    .menu-card { background: var(--krem); border-radius: var(--radius-yumusak); padding: 2.5rem 1.5rem; text-align: center; box-shadow: var(--golge); transition: transform 0.4s, box-shadow 0.4s; border: 1px solid #efe2d3; }
     .menu-card:hover { transform: translateY(-12px) rotateX(2deg) rotateY(2deg); box-shadow: 0 30px 45px rgba(80, 45, 20, 0.18); }
-    .menu-card:hover::before { opacity: 1; }
-    .menu-icon { font-size: 2.8rem; color: var(--kahve); margin-bottom: 1.2rem; transition: transform 0.3s; }
-    .menu-card:hover .menu-icon { transform: scale(1.2); }
+    .menu-icon { font-size: 2.8rem; color: var(--kahve); margin-bottom: 1.2rem; }
     .menu-price { font-weight: 700; font-size: 1.5rem; color: var(--kahve); margin: 0.9rem 0; }
 
-    /* ===== GALERİ ===== */
     .gallery-section { padding: 5rem 2rem; background: var(--acik-kahve); }
     .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.4rem; max-width: 1250px; margin: auto; }
-    .gallery-item {
-      border-radius: var(--radius-yumusak);
-      overflow: hidden;
-      box-shadow: var(--golge);
-      aspect-ratio: 1/1;
-      transition: transform 0.4s, box-shadow 0.4s;
-    }
-    .gallery-item img { transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-    .gallery-item:hover { transform: scale(1.03); box-shadow: var(--golge-koyu); }
+    .gallery-item { border-radius: var(--radius-yumusak); overflow: hidden; box-shadow: var(--golge); aspect-ratio: 1/1; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
     .gallery-item:hover img { transform: scale(1.1); }
 
-    /* ===== YORUMLAR (OTOMATİK KAYAN) ===== */
     .reviews-section { padding: 5rem 2rem; background: var(--beyaz); overflow: hidden; }
-    .reviews-track {
-      display: flex;
-      gap: 2rem;
-      width: max-content;
-      animation: slideReviews 35s linear infinite;
-      padding: 1rem 0;
-    }
+    .reviews-track { display: flex; gap: 2rem; width: max-content; animation: slideReviews 35s linear infinite; padding: 1rem 0; }
     .reviews-track:hover { animation-play-state: paused; }
-    @keyframes slideReviews {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .review-card {
-      min-width: 300px;
-      max-width: 320px;
-      background: var(--krem);
-      border-radius: var(--radius-yumusak);
-      padding: 2.2rem 1.8rem;
-      box-shadow: var(--golge);
-      border: 1px solid #ecdccb;
-      flex-shrink: 0;
-    }
+    @keyframes slideReviews { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .review-card { min-width: 300px; background: var(--krem); border-radius: var(--radius-yumusak); padding: 2.2rem 1.8rem; box-shadow: var(--golge); border: 1px solid #ecdccb; }
     .stars { color: #e2b643; margin-bottom: 1rem; }
 
-    /* ===== SAAT & KONUM ===== */
     .hours-section { padding: 5rem 2rem; background: var(--krem); display: flex; flex-wrap: wrap; gap: 2.5rem; max-width: 1250px; margin: auto; align-items: center; }
     .hours-box { background: white; padding: 2.5rem; border-radius: var(--radius-yumusak); box-shadow: var(--golge); flex: 1 1 300px; }
     .hours-list li { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px dashed #d9c7b2; }
@@ -422,13 +415,13 @@
     .map-container { flex: 1 1 500px; border-radius: var(--radius-yumusak); overflow: hidden; box-shadow: var(--golge-koyu); }
     .map-container iframe { width: 100%; height: 370px; border: 0; }
 
-    /* FOOTER */
     .footer { background: var(--cok-koyu); color: #cfb9a5; text-align: center; padding: 3rem 2rem; }
     .social-icons a { color: #cfb9a5; font-size: 1.6rem; margin: 0 0.8rem; transition: 0.3s; display: inline-block; }
     .social-icons a:hover { color: white; transform: translateY(-4px); }
 
     @media (max-width: 768px) {
       .header { padding: 0.5rem 1.5rem; }
+      .nav-and-lang { flex-direction: row-reverse; }
       .nav-links {
         position: fixed; top: 75px; left: 0; width: 100%; background: white; flex-direction: column; gap: 2rem; padding: 2.5rem;
         transform: translateY(-150%); transition: 0.4s; box-shadow: 0 20px 35px rgba(0,0,0,0.05);
@@ -445,34 +438,47 @@
       <div class="logo-icon"><i class="fas fa-mug-hot"></i></div>
       <div class="logo-text">Piccolo <span>Cafe</span></div>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home">Ana Sayfa</a></li>
-      <li><a href="#about">Hakkımızda</a></li>
-      <li><a href="#menu">Menü</a></li>
-      <li><a href="#gallery">Galeri</a></li>
-      <li><a href="#reviews">Yorumlar</a></li>
-      <li><a href="#contact">İletişim</a></li>
-    </ul>
+    <div class="nav-and-lang">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" data-i18n="nav_home">Ana Sayfa</a></li>
+        <li><a href="#about" data-i18n="nav_about">Hakkımızda</a></li>
+        <li><a href="#menu" data-i18n="nav_menu">Menü</a></li>
+        <li><a href="#gallery" data-i18n="nav_gallery">Galeri</a></li>
+        <li><a href="#reviews" data-i18n="nav_reviews">Yorumlar</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">İletişim</a></li>
+      </ul>
+      
+      <!-- Dil Seçici -->
+      <div class="lang-switcher">
+        <button class="lang-btn" id="langBtn">
+          <i class="fas fa-globe"></i> <span id="currentLangText">Türkçe</span> <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="lang-dropdown" id="langDropdown">
+          <li><button data-lang="tr" class="active"><i class="fas fa-flag"></i> Türkçe</button></li>
+          <li><button data-lang="en"><i class="fas fa-flag"></i> English</button></li>
+          <li><button data-lang="ru"><i class="fas fa-flag"></i> Русский</button></li>
+          <li><button data-lang="de"><i class="fas fa-flag"></i> Deutsch</button></li>
+          <li><button data-lang="it"><i class="fas fa-flag"></i> Italiano</button></li>
+        </ul>
+      </div>
+      
+      <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+    </div>
   </header>
 
-  <!-- HERO + YÜZEN ÇEKİRDEKLER + BARDAKLAR -->
+  <!-- HERO -->
   <section class="hero" id="home">
     <div class="floating-beans">
-      <i class="fas fa-coffee bean"></i>
-      <i class="fas fa-coffee bean"></i>
-      <i class="fas fa-coffee bean"></i>
-      <i class="fas fa-coffee bean"></i>
-      <i class="fas fa-coffee bean"></i>
-      <i class="fas fa-coffee bean"></i>
+      <i class="fas fa-coffee bean"></i><i class="fas fa-coffee bean"></i><i class="fas fa-coffee bean"></i>
+      <i class="fas fa-coffee bean"></i><i class="fas fa-coffee bean"></i><i class="fas fa-coffee bean"></i>
     </div>
     <div class="hero-content">
-      <div class="hero-badge">✦ 2018'den beri İstanbul ✦</div>
-      <h1>Küçük bir mola,<br><i>büyük</i> bir lezzet.</h1>
-      <p>Piccolo Cafe'de her yudumda taze çekilmiş kahvenin sıcaklığını hissedin. Butik atmosfer, el yapımı tatlar.</p>
+      <div class="hero-badge" data-i18n="hero_badge">✦ 2018'den beri İstanbul ✦</div>
+      <h1><span data-i18n="hero_title1">Küçük bir mola,</span><br><i data-i18n="hero_title2">büyük</i> <span data-i18n="hero_title3">bir lezzet.</span></h1>
+      <p data-i18n="hero_desc">Piccolo Cafe'de her yudumda taze çekilmiş kahvenin sıcaklığını hissedin. Butik atmosfer, el yapımı tatlar.</p>
       <div class="btn-group">
-        <a href="#menu" class="btn btn-primary">Menüyü Keşfet <i class="fas fa-arrow-right" style="margin-left:6px;"></i></a>
-        <a href="#contact" class="btn btn-outline">Bize Ulaşın</a>
+        <a href="#menu" class="btn btn-primary" data-i18n="btn_menu">Menüyü Keşfet <i class="fas fa-arrow-right" style="margin-left:6px;"></i></a>
+        <a href="#contact" class="btn btn-outline" data-i18n="btn_contact">Bize Ulaşın</a>
       </div>
     </div>
     <div class="hero-cups" id="heroCups">
@@ -484,12 +490,13 @@
   <!-- HAKKIMIZDA -->
   <section class="about-section" id="about">
     <div class="section-title reveal reveal-up">
-      <h2>Hikayemiz</h2><div class="alt-cizgi"></div><p>Kahveye duyulan tutkuyla kurulmuş sıcacık bir durak</p>
+      <h2 data-i18n="about_title">Hikayemiz</h2><div class="alt-cizgi"></div>
+      <p data-i18n="about_sub">Kahveye duyulan tutkuyla kurulmuş sıcacık bir durak</p>
     </div>
     <div class="about-grid">
       <div class="about-text reveal reveal-left">
-        <h3 style="font-family:'Playfair Display',serif; font-size:2rem;">Piccolo, İtalyanca "küçük" demek...</h3>
-        <p>2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, beyaz ve kahverenginin huzur veren uyumuyla tasarlandı. Kahvelerimiz butik kavuruculardan, tatlılarımız günlük el yapımıdır.</p>
+        <h3 style="font-family:'Playfair Display',serif; font-size:2rem;" data-i18n="about_heading">Piccolo, İtalyanca "küçük" demek...</h3>
+        <p data-i18n="about_text">2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, beyaz ve kahverenginin huzur veren uyumuyla tasarlandı. Kahvelerimiz butik kavuruculardan, tatlılarımız günlük el yapımıdır.</p>
       </div>
       <div class="about-image reveal reveal-right">
         <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop" alt="Piccolo iç mekan">
@@ -499,22 +506,24 @@
 
   <!-- MENÜ -->
   <section class="menu-section" id="menu">
-    <div class="section-title reveal reveal-up"><h2>Lezzet Menüsü</h2><div class="alt-cizgi"></div><p>Taze & el yapımı seçenekler</p></div>
+    <div class="section-title reveal reveal-up">
+      <h2 data-i18n="menu_title">Lezzet Menüsü</h2><div class="alt-cizgi"></div><p data-i18n="menu_sub">Taze & el yapımı seçenekler</p>
+    </div>
     <div class="menu-grid">
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-coffee"></i></div><h4>Espresso</h4><div class="menu-price">₺42</div><p>Yoğun İtalyan klasiği</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-mug-hot"></i></div><h4>Americano</h4><div class="menu-price">₺48</div><p>Espresso üzerine sıcak su</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-wine-glass-alt"></i></div><h4>Latte</h4><div class="menu-price">₺55</div><p>İpek gibi süt köpüğü</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-cloud"></i></div><h4>Cappuccino</h4><div class="menu-price">₺55</div><p>Bol köpük, tarçın</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-seedling"></i></div><h4>Filtre Kahve</h4><div class="menu-price">₺45</div><p>Günün özel çekirdeği</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-moon"></i></div><h4>Türk Kahvesi</h4><div class="menu-price">₺38</div><p>Bol köpüklü, lokumlu</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-cake"></i></div><h4>Cheesecake</h4><div class="menu-price">₺65</div><p>Fırında, mevsim meyveli</p></div>
-      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-croissant"></i></div><h4>Kruvasan</h4><div class="menu-price">₺50</div><p>Tereyağlı, çikolatalı</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-coffee"></i></div><h4>Espresso</h4><div class="menu-price">₺42</div><p data-i18n="menu_espresso">Yoğun İtalyan klasiği</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-mug-hot"></i></div><h4>Americano</h4><div class="menu-price">₺48</div><p data-i18n="menu_americano">Espresso üzerine sıcak su</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-wine-glass-alt"></i></div><h4>Latte</h4><div class="menu-price">₺55</div><p data-i18n="menu_latte">İpek gibi süt köpüğü</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-cloud"></i></div><h4>Cappuccino</h4><div class="menu-price">₺55</div><p data-i18n="menu_cappuccino">Bol köpük, tarçın</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-seedling"></i></div><h4 data-i18n="menu_filter">Filtre Kahve</h4><div class="menu-price">₺45</div><p data-i18n="menu_filter_desc">Günün özel çekirdeği</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-moon"></i></div><h4 data-i18n="menu_turkish">Türk Kahvesi</h4><div class="menu-price">₺38</div><p data-i18n="menu_turkish_desc">Bol köpüklü, lokumlu</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-cake"></i></div><h4>Cheesecake</h4><div class="menu-price">₺65</div><p data-i18n="menu_cheesecake">Fırında, mevsim meyveli</p></div>
+      <div class="menu-card reveal reveal-scale"><div class="menu-icon"><i class="fas fa-croissant"></i></div><h4>Kruvasan</h4><div class="menu-price">₺50</div><p data-i18n="menu_croissant">Tereyağlı, çikolatalı</p></div>
     </div>
   </section>
 
   <!-- GALERİ -->
   <section class="gallery-section" id="gallery">
-    <div class="section-title reveal reveal-up"><h2>Kareler</h2><div class="alt-cizgi"></div><p>Piccolo'dan anlar</p></div>
+    <div class="section-title reveal reveal-up"><h2 data-i18n="gallery_title">Kareler</h2><div class="alt-cizgi"></div><p data-i18n="gallery_sub">Piccolo'dan anlar</p></div>
     <div class="gallery-grid">
       <div class="gallery-item reveal reveal-scale"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&auto=format&fit=crop" alt="kahve"></div>
       <div class="gallery-item reveal reveal-scale"><img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400&auto=format&fit=crop" alt="latte"></div>
@@ -524,39 +533,28 @@
     </div>
   </section>
 
-  <!-- YORUMLAR (SONSUZ KAYAN) -->
+  <!-- YORUMLAR -->
   <section class="reviews-section" id="reviews">
-    <div class="section-title reveal reveal-up"><h2>Misafir Yorumları</h2><div class="alt-cizgi"></div><p>Google’da bizi değerlendirenler</p></div>
-    <div class="reviews-track">
-      <!-- 5 yorum 2 kez yazıldı (kayma efekti için) -->
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Kahveleri harika, atmosfer çok sıcak."</p><span class="reviewer">— Ayşe Y.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Espresso'su İtalya'dakileri aratmıyor."</p><span class="reviewer">— Mehmet K.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><p class="review-text">"Kruvasanları enfes, güler yüzlü ekip."</p><span class="reviewer">— Zeynep T.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Filtre kahve ve cheesecake efsane!"</p><span class="reviewer">— Ali V.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Piccolo'da vakit geçirmek terapi."</p><span class="reviewer">— Elif D.</span></div>
-      <!-- kopya -->
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Kahveleri harika, atmosfer çok sıcak."</p><span class="reviewer">— Ayşe Y.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Espresso'su İtalya'dakileri aratmıyor."</p><span class="reviewer">— Mehmet K.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><p class="review-text">"Kruvasanları enfes, güler yüzlü ekip."</p><span class="reviewer">— Zeynep T.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Filtre kahve ve cheesecake efsane!"</p><span class="reviewer">— Ali V.</span></div>
-      <div class="review-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Piccolo'da vakit geçirmek terapi."</p><span class="reviewer">— Elif D.</span></div>
+    <div class="section-title reveal reveal-up"><h2 data-i18n="reviews_title">Misafir Yorumları</h2><div class="alt-cizgi"></div><p data-i18n="reviews_sub">Google’da bizi değerlendirenler</p></div>
+    <div class="reviews-track" id="reviewsTrack">
+      <!-- Yorumlar sabit kalacak, çeviri yapılmayacak -->
     </div>
   </section>
 
   <!-- SAAT & KONUM -->
   <section class="hours-section" id="contact">
     <div class="hours-box reveal reveal-left">
-      <h3><i class="far fa-clock" style="color:var(--kahve); margin-right:8px;"></i>Çalışma Saatleri</h3>
+      <h3><i class="far fa-clock" style="color:var(--kahve); margin-right:8px;"></i><span data-i18n="hours_title">Çalışma Saatleri</span></h3>
       <ul class="hours-list">
-        <li><span>Pazartesi</span><span>08:00 – 18:00</span></li>
-        <li><span>Salı</span><span>08:00 – 18:00</span></li>
-        <li><span>Çarşamba</span><span>08:00 – 18:00</span></li>
-        <li><span>Perşembe</span><span>08:00 – 18:00</span></li>
-        <li><span>Cuma</span><span>08:00 – 18:00</span></li>
-        <li><span>Cumartesi</span><span>09:00 – 18:00</span></li>
-        <li><span>Pazar</span><span class="closed">Kapalı</span></li>
+        <li><span data-i18n="day_mon">Pazartesi</span><span>08:00 – 18:00</span></li>
+        <li><span data-i18n="day_tue">Salı</span><span>08:00 – 18:00</span></li>
+        <li><span data-i18n="day_wed">Çarşamba</span><span>08:00 – 18:00</span></li>
+        <li><span data-i18n="day_thu">Perşembe</span><span>08:00 – 18:00</span></li>
+        <li><span data-i18n="day_fri">Cuma</span><span>08:00 – 18:00</span></li>
+        <li><span data-i18n="day_sat">Cumartesi</span><span>09:00 – 18:00</span></li>
+        <li><span data-i18n="day_sun">Pazar</span><span class="closed" data-i18n="closed">Kapalı</span></li>
       </ul>
-      <p style="margin-top:1.4rem;"><i class="fas fa-map-pin" style="color:var(--kahve);"></i> Caferağa Mah. Moda Cad. No:12, Kadıköy</p>
+      <p style="margin-top:1.4rem;"><i class="fas fa-map-pin" style="color:var(--kahve);"></i> <span data-i18n="address">Caferağa Mah. Moda Cad. No:12, Kadıköy</span></p>
     </div>
     <div class="map-container reveal reveal-right">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.7140477493867!2d28.968163200000003!3d41.0096316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab95266dfbb23%3A0x85406e27b3acad51!2sPiccolo%20Coffee%20Shop!5e0!3m2!1str!2str!4v1779744710788!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Piccolo Cafe Konum"></iframe>
@@ -571,11 +569,198 @@
       <a href="#"><i class="fab fa-facebook-f"></i></a>
       <a href="#"><i class="fab fa-tripadvisor"></i></a>
     </div>
-    <p style="margin-top:1rem;">© 2025 Piccolo Cafe • Küçük mola, büyük lezzet.</p>
+    <p style="margin-top:1rem;" data-i18n="footer_text">© 2025 Piccolo Cafe • Küçük mola, büyük lezzet.</p>
   </footer>
 
   <script>
     (function() {
+      // Dil çevirileri
+      const translations = {
+        tr: {
+          nav_home: "Ana Sayfa", nav_about: "Hakkımızda", nav_menu: "Menü", nav_gallery: "Galeri", nav_reviews: "Yorumlar", nav_contact: "İletişim",
+          hero_badge: "✦ 2018'den beri İstanbul ✦", hero_title1: "Küçük bir mola,", hero_title2: "büyük", hero_title3: "bir lezzet.",
+          hero_desc: "Piccolo Cafe'de her yudumda taze çekilmiş kahvenin sıcaklığını hissedin. Butik atmosfer, el yapımı tatlar.",
+          btn_menu: "Menüyü Keşfet", btn_contact: "Bize Ulaşın",
+          about_title: "Hikayemiz", about_sub: "Kahveye duyulan tutkuyla kurulmuş sıcacık bir durak",
+          about_heading: "Piccolo, İtalyanca \"küçük\" demek...",
+          about_text: "2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, beyaz ve kahverenginin huzur veren uyumuyla tasarlandı. Kahvelerimiz butik kavuruculardan, tatlılarımız günlük el yapımıdır.",
+          menu_title: "Lezzet Menüsü", menu_sub: "Taze & el yapımı seçenekler",
+          menu_espresso: "Yoğun İtalyan klasiği", menu_americano: "Espresso üzerine sıcak su", menu_latte: "İpek gibi süt köpüğü",
+          menu_cappuccino: "Bol köpük, tarçın", menu_filter: "Filtre Kahve", menu_filter_desc: "Günün özel çekirdeği",
+          menu_turkish: "Türk Kahvesi", menu_turkish_desc: "Bol köpüklü, lokumlu", menu_cheesecake: "Fırında, mevsim meyveli",
+          menu_croissant: "Tereyağlı, çikolatalı", gallery_title: "Kareler", gallery_sub: "Piccolo'dan anlar",
+          reviews_title: "Misafir Yorumları", reviews_sub: "Google’da bizi değerlendirenler",
+          hours_title: "Çalışma Saatleri", day_mon: "Pazartesi", day_tue: "Salı", day_wed: "Çarşamba", day_thu: "Perşembe",
+          day_fri: "Cuma", day_sat: "Cumartesi", day_sun: "Pazar", closed: "Kapalı",
+          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Küçük mola, büyük lezzet."
+        },
+        en: {
+          nav_home: "Home", nav_about: "About", nav_menu: "Menu", nav_gallery: "Gallery", nav_reviews: "Reviews", nav_contact: "Contact",
+          hero_badge: "✦ Since 2018 in Istanbul ✦", hero_title1: "A little break,", hero_title2: "big", hero_title3: "flavor.",
+          hero_desc: "Feel the warmth of freshly ground coffee with every sip at Piccolo Cafe. Boutique atmosphere, handmade tastes.",
+          btn_menu: "Discover Menu", btn_contact: "Contact Us",
+          about_title: "Our Story", about_sub: "A warm stop built on passion for coffee",
+          about_heading: "Piccolo means \"small\" in Italian...",
+          about_text: "Since 2018, Piccolo Cafe welcomes guests with homemade flavors and carefully selected beans, designed with the peaceful harmony of white and brown. Our coffees are from boutique roasters, our desserts are handmade daily.",
+          menu_title: "Taste Menu", menu_sub: "Fresh & handmade options",
+          menu_espresso: "Intense Italian classic", menu_americano: "Espresso with hot water", menu_latte: "Silky milk foam",
+          menu_cappuccino: "Rich foam, cinnamon", menu_filter: "Filter Coffee", menu_filter_desc: "Daily special beans",
+          menu_turkish: "Turkish Coffee", menu_turkish_desc: "With thick foam, Turkish delight", menu_cheesecake: "Baked, seasonal fruits",
+          menu_croissant: "Buttery, chocolate option", gallery_title: "Moments", gallery_sub: "Frames from Piccolo",
+          reviews_title: "Guest Reviews", reviews_sub: "What people say on Google",
+          hours_title: "Working Hours", day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday",
+          day_fri: "Friday", day_sat: "Saturday", day_sun: "Sunday", closed: "Closed",
+          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Small break, big taste."
+        },
+        ru: {
+          nav_home: "Главная", nav_about: "О нас", nav_menu: "Меню", nav_gallery: "Галерея", nav_reviews: "Отзывы", nav_contact: "Контакты",
+          hero_badge: "✦ С 2018 года в Стамбуле ✦", hero_title1: "Маленький перерыв,", hero_title2: "большой", hero_title3: "вкус.",
+          hero_desc: "Почувствуйте тепло свежесваренного кофе в каждом глотке в Piccolo Cafe. Бутик-атмосфера, ручная работа.",
+          btn_menu: "Меню", btn_contact: "Связаться",
+          about_title: "Наша история", about_sub: "Тёплое место, рождённое любовью к кофе",
+          about_heading: "Piccolo по-итальянски «маленький»...",
+          about_text: "С 2018 года Piccolo Cafe встречает гостей домашними угощениями и тщательно отобранными зёрнами. Интерьер в бело-коричневых тонах дарит уют. Кофе от бутик-обжарщиков, десерты готовятся ежедневно.",
+          menu_title: "Меню", menu_sub: "Свежие и ручные варианты",
+          menu_espresso: "Насыщенная итальянская классика", menu_americano: "Эспрессо с горячей водой", menu_latte: "Шелковистая молочная пенка",
+          menu_cappuccino: "Пышная пенка, корица", menu_filter: "Фильтр-кофе", menu_filter_desc: "Специальные зёрна дня",
+          menu_turkish: "Турецкий кофе", menu_turkish_desc: "С густой пенкой, рахат-лукум", menu_cheesecake: "Запечённый, с сезонными фруктами",
+          menu_croissant: "Масляный, с шоколадом", gallery_title: "Кадры", gallery_sub: "Моменты из Piccolo",
+          reviews_title: "Отзывы гостей", reviews_sub: "Оценки в Google",
+          hours_title: "Часы работы", day_mon: "Понедельник", day_tue: "Вторник", day_wed: "Среда", day_thu: "Четверг",
+          day_fri: "Пятница", day_sat: "Суббота", day_sun: "Воскресенье", closed: "Закрыто",
+          address: "Caferağa Mah. Moda Cad. No:12, Кадыкёй", footer_text: "© 2025 Piccolo Cafe • Маленький перерыв, большой вкус."
+        },
+        de: {
+          nav_home: "Start", nav_about: "Über uns", nav_menu: "Menü", nav_gallery: "Galerie", nav_reviews: "Bewertungen", nav_contact: "Kontakt",
+          hero_badge: "✦ Seit 2018 in Istanbul ✦", hero_title1: "Eine kleine Pause,", hero_title2: "großer", hero_title3: "Geschmack.",
+          hero_desc: "Spüren Sie die Wärme frisch gemahlenen Kaffees bei jedem Schluck im Piccolo Cafe. Boutique-Atmosphäre, handgemachte Köstlichkeiten.",
+          btn_menu: "Menü entdecken", btn_contact: "Kontakt",
+          about_title: "Unsere Geschichte", about_sub: "Ein warmer Ort aus Leidenschaft für Kaffee",
+          about_heading: "Piccolo bedeutet \"klein\" auf Italienisch...",
+          about_text: "Seit 2018 empfängt das Piccolo Cafe Gäste mit hausgemachten Leckereien und sorgfältig ausgewählten Bohnen, gestaltet in der beruhigenden Harmonie von Weiß und Braun. Unsere Kaffees stammen von Boutique-Röstern, Desserts sind täglich handgemacht.",
+          menu_title: "Genussmenü", menu_sub: "Frische & handgemachte Optionen",
+          menu_espresso: "Intensiver italienischer Klassiker", menu_americano: "Espresso mit heißem Wasser", menu_latte: "Seidiger Milchschaum",
+          menu_cappuccino: "Viel Schaum, Zimt", menu_filter: "Filterkaffee", menu_filter_desc: "Tägliche Spezialbohnen",
+          menu_turkish: "Türkischer Kaffee", menu_turkish_desc: "Mit dickem Schaum, Lokum", menu_cheesecake: "Gebacken, mit saisonalen Früchten",
+          menu_croissant: "Buttrig, mit Schokolade", gallery_title: "Momente", gallery_sub: "Eindrücke aus dem Piccolo",
+          reviews_title: "Gästebewertungen", reviews_sub: "Google-Bewertungen",
+          hours_title: "Öffnungszeiten", day_mon: "Montag", day_tue: "Dienstag", day_wed: "Mittwoch", day_thu: "Donnerstag",
+          day_fri: "Freitag", day_sat: "Samstag", day_sun: "Sonntag", closed: "Geschlossen",
+          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Kleine Pause, großer Geschmack."
+        },
+        it: {
+          nav_home: "Home", nav_about: "Chi siamo", nav_menu: "Menu", nav_gallery: "Galleria", nav_reviews: "Recensioni", nav_contact: "Contatti",
+          hero_badge: "✦ Dal 2018 a Istanbul ✦", hero_title1: "Una piccola pausa,", hero_title2: "grande", hero_title3: "sapore.",
+          hero_desc: "Senti il calore del caffè appena macinato ad ogni sorso da Piccolo Cafe. Atmosfera boutique, sapori artigianali.",
+          btn_menu: "Scopri il menu", btn_contact: "Contattaci",
+          about_title: "La nostra storia", about_sub: "Un caldo rifugio nato dalla passione per il caffè",
+          about_heading: "Piccolo in italiano significa \"piccolo\"...",
+          about_text: "Dal 2018, Piccolo Cafe accoglie gli ospiti con sapori fatti in casa e chicchi selezionati, nell'armonia rassicurante del bianco e del marrone. I nostri caffè provengono da torrefazioni artigianali, i dolci sono fatti a mano ogni giorno.",
+          menu_title: "Menu del gusto", menu_sub: "Opzioni fresche e artigianali",
+          menu_espresso: "Intenso classico italiano", menu_americano: "Espresso con acqua calda", menu_latte: "Schiuma di latte setosa",
+          menu_cappuccino: "Tanta schiuma, cannella", menu_filter: "Caffè filtro", menu_filter_desc: "Miscela speciale del giorno",
+          menu_turkish: "Caffè turco", menu_turkish_desc: "Con schiuma densa, lokum", menu_cheesecake: "Al forno, frutta di stagione",
+          menu_croissant: "Burroso, con cioccolato", gallery_title: "Immagini", gallery_sub: "Momenti da Piccolo",
+          reviews_title: "Recensioni", reviews_sub: "Cosa dicono su Google",
+          hours_title: "Orari di apertura", day_mon: "Lunedì", day_tue: "Martedì", day_wed: "Mercoledì", day_thu: "Giovedì",
+          day_fri: "Venerdì", day_sat: "Sabato", day_sun: "Domenica", closed: "Chiuso",
+          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Piccola pausa, grande sapore."
+        }
+      };
+
+      // Yorumlar her dilde aynı (orijinal halleriyle)
+      const reviewsData = [
+        { stars: 5, text: '"Kahveleri harika, atmosfer çok sıcak."', reviewer: '— Ayşe Y.' },
+        { stars: 5, text: '"Espresso\'su İtalya\'dakileri aratmıyor."', reviewer: '— Mehmet K.' },
+        { stars: 4.5, text: '"Kruvasanları enfes, güler yüzlü ekip."', reviewer: '— Zeynep T.' },
+        { stars: 5, text: '"Filtre kahve ve cheesecake efsane!"', reviewer: '— Ali V.' },
+        { stars: 5, text: '"Piccolo\'da vakit geçirmek terapi."', reviewer: '— Elif D.' }
+      ];
+
+      function renderReviews() {
+        const track = document.getElementById('reviewsTrack');
+        if (!track) return;
+        const starFull = '<i class="fas fa-star"></i>';
+        const starHalf = '<i class="fas fa-star-half-alt"></i>';
+        let html = '';
+        for (let i = 0; i < 2; i++) { // iki kere yazdır (kayan efekt için)
+          reviewsData.forEach(r => {
+            let starsHtml = '';
+            for (let s = 0; s < Math.floor(r.stars); s++) starsHtml += starFull;
+            if (r.stars % 1 !== 0) starsHtml += starHalf;
+            html += `<div class="review-card"><div class="stars">${starsHtml}</div><p class="review-text">${r.text}</p><span class="reviewer">${r.reviewer}</span></div>`;
+          });
+        }
+        track.innerHTML = html;
+      }
+      renderReviews();
+
+      // Dil değiştirme fonksiyonu
+      function setLanguage(lang) {
+        const t = translations[lang];
+        if (!t) return;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (t[key]) {
+            if (el.tagName === 'I' && el.parentElement && el.parentElement.hasAttribute('data-i18n')) {
+              // i etiketi içeren başlık (hero_title2)
+              el.innerHTML = t[key];
+            } else {
+              el.textContent = t[key];
+            }
+          }
+        });
+        // Butonlardaki ikonlu metinler için özel düzeltme
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+          if (lang === 'tr') btn.innerHTML = 'Menüyü Keşfet <i class="fas fa-arrow-right" style="margin-left:6px;"></i>';
+          else if (lang === 'en') btn.innerHTML = 'Discover Menu <i class="fas fa-arrow-right" style="margin-left:6px;"></i>';
+          else if (lang === 'ru') btn.innerHTML = 'Меню <i class="fas fa-arrow-right" style="margin-left:6px;"></i>';
+          else if (lang === 'de') btn.innerHTML = 'Menü entdecken <i class="fas fa-arrow-right" style="margin-left:6px;"></i>';
+          else if (lang === 'it') btn.innerHTML = 'Scopri il menu <i class="fas fa-arrow-right" style="margin-left:6px;"></i>';
+        });
+        document.querySelectorAll('.btn-outline').forEach(btn => {
+          btn.textContent = t.btn_contact || 'Contact Us';
+        });
+        // Dil dropdown buton metni
+        const langNames = { tr: 'Türkçe', en: 'English', ru: 'Русский', de: 'Deutsch', it: 'Italiano' };
+        const currentLangText = document.getElementById('currentLangText');
+        if (currentLangText) currentLangText.textContent = langNames[lang];
+        // Aktif sınıfını güncelle
+        document.querySelectorAll('.lang-dropdown button').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector(`.lang-dropdown button[data-lang="${lang}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+        // HTML lang attribute
+        document.documentElement.lang = lang;
+        // Local storage kaydet
+        localStorage.setItem('piccolo-lang', lang);
+      }
+
+      // Dil dropdown toggle
+      const langBtn = document.getElementById('langBtn');
+      const langDropdown = document.getElementById('langDropdown');
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', (e) => {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove('open');
+        }
+      });
+
+      // Dil seçimi
+      document.querySelectorAll('.lang-dropdown button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const lang = btn.getAttribute('data-lang');
+          setLanguage(lang);
+          langDropdown.classList.remove('open');
+        });
+      });
+
+      // Kayıtlı dil varsa yükle
+      const savedLang = localStorage.getItem('piccolo-lang') || 'tr';
+      setLanguage(savedLang);
+
       // Mobil menü
       const hamburger = document.getElementById('hamburger');
       const navLinks = document.getElementById('navLinks');
@@ -586,8 +771,6 @@
       const header = document.getElementById('header');
       window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 50);
-        
-        // Bardakların kaybolması
         const cups = document.getElementById('heroCups');
         if (cups) {
           const scrolled = window.scrollY;
@@ -599,7 +782,7 @@
         }
       });
 
-      // Scroll reveal (Intersection Observer)
+      // Scroll reveal
       const reveals = document.querySelectorAll('.reveal');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -610,8 +793,6 @@
         });
       }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
       reveals.forEach(el => observer.observe(el));
-
-      // Sayfa yüklendiğinde görünür olanları aktif et
       window.addEventListener('load', () => {
         reveals.forEach(el => {
           if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('visible');
