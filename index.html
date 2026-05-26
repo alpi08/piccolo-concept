@@ -62,7 +62,7 @@
       transform: translate(0) scale(1);
     }
 
-    /* ===== HEADER (Mobil Uyumlu) ===== */
+    /* ===== HEADER ===== */
     .header {
       position: fixed;
       top: 0;
@@ -260,12 +260,49 @@
 
     @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(70px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    .hero-cups { margin-top: auto; position: relative; z-index: 2; width: 100%; display: flex; justify-content: center; padding-bottom: 1rem; transition: opacity 0.4s, transform 0.4s; }
-    .cup { font-size: 7rem; color: var(--koyu-kahve); filter: drop-shadow(0 15px 18px rgba(80,45,20,0.4)); position: absolute; }
-    .cup.left { transform: rotate(-32deg); animation: swayLeft 2.6s infinite ease-in-out; }
-    .cup.right { transform: rotate(32deg); animation: swayRight 2.6s infinite ease-in-out; animation-delay: 1.3s; }
-    @keyframes swayLeft { 0% { transform: rotate(-32deg) translateY(0); } 50% { transform: rotate(-28deg) translateY(-8px); } 100% { transform: rotate(-32deg) translateY(0); } }
-    @keyframes swayRight { 0% { transform: rotate(32deg) translateY(0); } 50% { transform: rotate(36deg) translateY(-8px); } 100% { transform: rotate(32deg) translateY(0); } }
+    /* GERÇEK KAHVE BARDAK PNG LERİ */
+    .hero-cups {
+      margin-top: auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 1.5rem;
+      transition: opacity 0.4s, transform 0.4s;
+      height: 180px;
+    }
+    .cup {
+      position: absolute;
+      width: 130px;
+      height: auto;
+      filter: drop-shadow(0 18px 22px rgba(80, 45, 20, 0.5));
+      transition: all 0.3s ease;
+    }
+    .cup.left {
+      transform: rotate(-35deg);
+      animation: swayLeft 2.8s infinite ease-in-out;
+      left: calc(50% - 100px);
+      z-index: 1;
+    }
+    .cup.right {
+      transform: rotate(35deg);
+      animation: swayRight 2.8s infinite ease-in-out;
+      animation-delay: 1.4s;
+      right: calc(50% - 100px);
+      z-index: 1;
+    }
+    @keyframes swayLeft {
+      0% { transform: rotate(-35deg) translateY(0); }
+      50% { transform: rotate(-30deg) translateY(-12px); }
+      100% { transform: rotate(-35deg) translateY(0); }
+    }
+    @keyframes swayRight {
+      0% { transform: rotate(35deg) translateY(0); }
+      50% { transform: rotate(40deg) translateY(-12px); }
+      100% { transform: rotate(35deg) translateY(0); }
+    }
 
     /* ===== BÖLÜMLER ===== */
     .section-title { text-align: center; margin-bottom: 2.5rem; }
@@ -280,7 +317,6 @@
     .about-image { flex: 1 1 350px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--golge-koyu); }
     .about-image img { width: 100%; display: block; }
 
-    /* ===== MENÜ ===== */
     .menu-section { padding: 4rem 1.5rem; background: var(--beyaz); }
     .menu-container {
       display: grid;
@@ -351,7 +387,6 @@
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
     .gallery-item:hover img { transform: scale(1.1); }
 
-    /* ===== GERÇEK YORUMLAR ===== */
     .reviews-section { padding: 4rem 1.5rem; background: var(--beyaz); overflow: hidden; }
     .reviews-grid {
       display: grid;
@@ -476,14 +511,15 @@
       .hero h1 i { font-size: 3.2rem; }
       .hero p { font-size: 1rem; }
       .btn { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
-      .cup { font-size: 5rem; }
       .section-title h2 { font-size: 2rem; }
+      .hero-cups { height: 130px; }
+      .cup { width: 90px; }
+      .cup.left { left: calc(50% - 70px); }
+      .cup.right { right: calc(50% - 70px); }
       
       .menu-container { grid-template-columns: 1fr; gap: 1.5rem; }
       .menu-category { padding: 1.5rem; }
-      
       .reviews-grid { grid-template-columns: 1fr; }
-      
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
       .review-card { min-width: auto; padding: 1.5rem; }
     }
@@ -539,9 +575,11 @@
         <a href="#contact" class="btn btn-outline" data-i18n="btn_contact">Bize Ulaşın</a>
       </div>
     </div>
+    
+    <!-- GERÇEK KAHVE BARDAK PNG'LERİ -->
     <div class="hero-cups" id="heroCups">
-      <i class="fas fa-mug-hot cup left"></i>
-      <i class="fas fa-mug-hot cup right"></i>
+      <img src="https://pngimg.com/uploads/coffee_cup/coffee_cup_PNG17360.png" alt="Kahve bardağı" class="cup left" onerror="this.style.display='none'">
+      <img src="https://pngimg.com/uploads/coffee_cup/coffee_cup_PNG17359.png" alt="Kahve bardağı" class="cup right" onerror="this.style.display='none'">
     </div>
   </section>
 
@@ -550,7 +588,7 @@
     <div class="about-grid">
       <div class="about-text reveal reveal-left">
         <h3 style="font-family:'Playfair Display',serif; font-size:2rem;" data-i18n="about_heading">Piccolo, İtalyanca "küçük" demek...</h3>
-        <p data-i18n="about_text">2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, beyaz ve kahverenginin huzur veren uyumuyla tasarlandı.</p>
+        <p data-i18n="about_text">2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, Kapalıçarşı'nın hemen yanı başında, tarihi dokunun içinde saklı bir hazine olarak hizmet veriyor.</p>
       </div>
       <div class="about-image reveal reveal-right"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop" alt="iç mekan"></div>
     </div>
@@ -613,7 +651,6 @@
     </div>
   </section>
 
-  <!-- GERÇEK YORUMLAR -->
   <section class="reviews-section" id="reviews">
     <div class="section-title reveal reveal-up">
       <h2 data-i18n="reviews_title">Misafir Yorumları</h2>
@@ -621,7 +658,6 @@
       <p data-i18n="reviews_sub">Google'da bizi değerlendirenler</p>
     </div>
     <div class="reviews-grid">
-      <!-- Ahmet Can Çakar -->
       <div class="review-card reveal reveal-up">
         <div class="review-header">
           <div class="reviewer-avatar">AÇ</div>
@@ -635,8 +671,6 @@
         <p class="review-text">"Mekan küçük olmasına rağmen toplantım varken yardımcı oldular. Kahve içtim ve şu ana kadar içtiğim en güzel latte idi. Tam ayarında yaptıklarını düşünüyorum, kesinlikle zincir kahvecilerden farklı, tavsiye ederim."</p>
         <div class="verified-badge"><i class="fas fa-check-circle"></i> Google yorumu</div>
       </div>
-
-      <!-- Manuel Figus -->
       <div class="review-card reveal reveal-up">
         <div class="review-header">
           <div class="reviewer-avatar">MF</div>
@@ -650,8 +684,6 @@
         <p class="review-text">"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I'll be back."</p>
         <div class="verified-badge"><i class="fas fa-check-circle"></i> Google review</div>
       </div>
-
-      <!-- Siraç Topaloğlu -->
       <div class="review-card reveal reveal-up">
         <div class="review-header">
           <div class="reviewer-avatar">ST</div>
@@ -707,14 +739,15 @@
           btn_menu: "Menüyü Keşfet", btn_contact: "Bize Ulaşın",
           about_title: "Hikayemiz", about_sub: "Kahveye duyulan tutkuyla kurulmuş sıcacık bir durak",
           about_heading: "Piccolo, İtalyanca \"küçük\" demek...",
-          about_text: "2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, beyaz ve kahverenginin huzur veren uyumuyla tasarlandı.",
+          about_text: "2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, Kapalıçarşı'nın hemen yanı başında, tarihi dokunun içinde saklı bir hazine olarak hizmet veriyor.",
           menu_title: "İçecek Menüsü", menu_sub: "Sıcak & Soğuk Seçenekler",
           hot_drinks: "Sıcak İçecekler", cold_drinks: "Soğuk İçecekler",
           gallery_title: "Kareler", gallery_sub: "Piccolo'dan anlar",
           reviews_title: "Misafir Yorumları", reviews_sub: "Google'da bizi değerlendirenler",
           hours_title: "Çalışma Saatleri", day_mon: "Pazartesi", day_tue: "Salı", day_wed: "Çarşamba", day_thu: "Perşembe",
           day_fri: "Cuma", day_sat: "Cumartesi", day_sun: "Pazar", closed: "Kapalı",
-          address: "Karadeniz Han, Molla Fenari Mah, Beyazıt, Hüseyin Ağa Cami Sk. No17/C, 34120 Fatih/İstanbul", footer_text: "© 2025 Piccolo Cafe • Küçük mola, büyük lezzet."
+          address: "Karadeniz Han, Molla Fenari Mah, Beyazıt, Hüseyin Ağa Cami Sk. No17/C, 34120 Fatih/İstanbul",
+          footer_text: "© 2025 Piccolo Cafe • Küçük mola, büyük lezzet."
         },
         en: {
           nav_home: "Home", nav_about: "About", nav_menu: "Menu", nav_gallery: "Gallery", nav_reviews: "Reviews", nav_contact: "Contact",
@@ -723,61 +756,15 @@
           btn_menu: "Discover Menu", btn_contact: "Contact Us",
           about_title: "Our Story", about_sub: "A warm stop built on passion for coffee",
           about_heading: "Piccolo means \"small\" in Italian...",
-          about_text: "Since 2018, Piccolo Cafe welcomes guests with homemade flavors and carefully selected beans, designed with the peaceful harmony of white and brown.",
+          about_text: "Since 2018, Piccolo Cafe has been welcoming guests with homemade flavors and carefully selected beans, serving as a hidden gem right next to the Grand Bazaar, nestled within the historic texture.",
           menu_title: "Drink Menu", menu_sub: "Hot & Cold Options",
           hot_drinks: "Hot Drinks", cold_drinks: "Cold Drinks",
           gallery_title: "Moments", gallery_sub: "Frames from Piccolo",
           reviews_title: "Guest Reviews", reviews_sub: "What people say on Google",
           hours_title: "Working Hours", day_mon: "Monday", day_tue: "Tuesday", day_wed: "Wednesday", day_thu: "Thursday",
           day_fri: "Friday", day_sat: "Saturday", day_sun: "Sunday", closed: "Closed",
-          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Small break, big taste."
-        },
-        ru: {
-          nav_home: "Главная", nav_about: "О нас", nav_menu: "Меню", nav_gallery: "Галерея", nav_reviews: "Отзывы", nav_contact: "Контакты",
-          hero_badge: "✦ С 2018 года в Стамбуле ✦", hero_title1: "Маленький перерыв,", hero_title2: "большой", hero_title3: "вкус.",
-          hero_desc: "Почувствуйте тепло свежесваренного кофе в Piccolo Cafe. Бутик-атмосфера, ручная работа.",
-          btn_menu: "Меню", btn_contact: "Связаться",
-          about_title: "Наша история", about_sub: "Тёплое место, рождённое любовью к кофе",
-          about_heading: "Piccolo по-итальянски «маленький»...",
-          about_text: "С 2018 года Piccolo Cafe встречает гостей домашними угощениями и тщательно отобранными зёрнами.",
-          menu_title: "Меню напитков", menu_sub: "Горячие и холодные",
-          hot_drinks: "Горячие напитки", cold_drinks: "Холодные напитки",
-          gallery_title: "Кадры", gallery_sub: "Моменты из Piccolo",
-          reviews_title: "Отзывы", reviews_sub: "Оценки в Google",
-          hours_title: "Часы работы", day_mon: "Пн", day_tue: "Вт", day_wed: "Ср", day_thu: "Чт", day_fri: "Пт", day_sat: "Сб", day_sun: "Вс", closed: "Закрыто",
-          address: "Caferağa Mah. Moda Cad. No:12, Кадыкёй", footer_text: "© 2025 Piccolo Cafe • Маленький перерыв, большой вкус."
-        },
-        de: {
-          nav_home: "Start", nav_about: "Über uns", nav_menu: "Menü", nav_gallery: "Galerie", nav_reviews: "Bewertungen", nav_contact: "Kontakt",
-          hero_badge: "✦ Seit 2018 in Istanbul ✦", hero_title1: "Eine kleine Pause,", hero_title2: "großer", hero_title3: "Geschmack.",
-          hero_desc: "Spüren Sie die Wärme frisch gemahlenen Kaffees im Piccolo Cafe. Boutique-Atmosphäre, handgemacht.",
-          btn_menu: "Menü entdecken", btn_contact: "Kontakt",
-          about_title: "Unsere Geschichte", about_sub: "Ein warmer Ort aus Leidenschaft für Kaffee",
-          about_heading: "Piccolo bedeutet \"klein\" auf Italienisch...",
-          about_text: "Seit 2018 empfängt das Piccolo Cafe Gäste mit hausgemachten Leckereien und ausgewählten Bohnen.",
-          menu_title: "Getränkekarte", menu_sub: "Heiße & kalte Optionen",
-          hot_drinks: "Heiße Getränke", cold_drinks: "Kalte Getränke",
-          gallery_title: "Momente", gallery_sub: "Eindrücke aus dem Piccolo",
-          reviews_title: "Bewertungen", reviews_sub: "Google-Bewertungen",
-          hours_title: "Öffnungszeiten", day_mon: "Montag", day_tue: "Dienstag", day_wed: "Mittwoch", day_thu: "Donnerstag",
-          day_fri: "Freitag", day_sat: "Samstag", day_sun: "Sonntag", closed: "Geschlossen",
-          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Kleine Pause, großer Geschmack."
-        },
-        it: {
-          nav_home: "Home", nav_about: "Chi siamo", nav_menu: "Menu", nav_gallery: "Galleria", nav_reviews: "Recensioni", nav_contact: "Contatti",
-          hero_badge: "✦ Dal 2018 a Istanbul ✦", hero_title1: "Una piccola pausa,", hero_title2: "grande", hero_title3: "sapore.",
-          hero_desc: "Senti il calore del caffè appena macinato da Piccolo Cafe. Atmosfera boutique, sapori artigianali.",
-          btn_menu: "Scopri il menu", btn_contact: "Contattaci",
-          about_title: "La nostra storia", about_sub: "Un caldo rifugio nato dalla passione per il caffè",
-          about_heading: "Piccolo in italiano significa \"piccolo\"...",
-          about_text: "Dal 2018, Piccolo Cafe accoglie gli ospiti con sapori fatti in casa e chicchi selezionati.",
-          menu_title: "Menu bevande", menu_sub: "Opzioni calde e fredde",
-          hot_drinks: "Bevande calde", cold_drinks: "Bevande fredde",
-          gallery_title: "Immagini", gallery_sub: "Momenti da Piccolo",
-          reviews_title: "Recensioni", reviews_sub: "Cosa dicono su Google",
-          hours_title: "Orari", day_mon: "Lunedì", day_tue: "Martedì", day_wed: "Mercoledì", day_thu: "Giovedì",
-          day_fri: "Venerdì", day_sat: "Sabato", day_sun: "Domenica", closed: "Chiuso",
-          address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Piccola pausa, grande sapore."
+          address: "Karadeniz Han, Molla Fenari Mah, Beyazıt, Hüseyin Ağa Cami Sk. No17/C, 34120 Fatih/İstanbul",
+          footer_text: "© 2025 Piccolo Cafe • Small break, big taste."
         }
       };
 
@@ -788,10 +775,11 @@
           const key = el.getAttribute('data-i18n');
           if (t[key]) el.textContent = t[key];
         });
-        const langNames = { tr: 'TR', en: 'EN', ru: 'RU', de: 'DE', it: 'IT' };
-        document.getElementById('currentLangText').textContent = langNames[lang];
+        const langNames = { tr: 'TR', en: 'EN' };
+        document.getElementById('currentLangText').textContent = langNames[lang] || lang.toUpperCase();
         document.querySelectorAll('.lang-dropdown button').forEach(b => b.classList.remove('active'));
-        document.querySelector(`.lang-dropdown button[data-lang="${lang}"]`).classList.add('active');
+        const activeBtn = document.querySelector(`.lang-dropdown button[data-lang="${lang}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
         document.documentElement.lang = lang;
         localStorage.setItem('piccolo-lang', lang);
       }
@@ -800,9 +788,8 @@
       const langDropdown = document.getElementById('langDropdown');
       langBtn.addEventListener('click', (e) => { e.stopPropagation(); langDropdown.classList.toggle('open'); });
       document.addEventListener('click', (e) => { if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) langDropdown.classList.remove('open'); });
-
       document.querySelectorAll('.lang-dropdown button').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', () => {
           setLanguage(btn.getAttribute('data-lang'));
           langDropdown.classList.remove('open');
         });
