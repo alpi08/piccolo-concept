@@ -280,7 +280,7 @@
     .about-image { flex: 1 1 350px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--golge-koyu); }
     .about-image img { width: 100%; display: block; }
 
-    /* ===== YENİ MENÜ TASARIMI (KATEGORİLİ) ===== */
+    /* ===== MENÜ ===== */
     .menu-section { padding: 4rem 1.5rem; background: var(--beyaz); }
     .menu-container {
       display: grid;
@@ -351,12 +351,98 @@
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
     .gallery-item:hover img { transform: scale(1.1); }
 
+    /* ===== GERÇEK YORUMLAR ===== */
     .reviews-section { padding: 4rem 1.5rem; background: var(--beyaz); overflow: hidden; }
-    .reviews-track { display: flex; gap: 1.5rem; width: max-content; animation: slideReviews 35s linear infinite; padding: 1rem 0; }
-    .reviews-track:hover { animation-play-state: paused; }
-    @keyframes slideReviews { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .review-card { min-width: 280px; background: var(--krem); border-radius: var(--radius-yumusak); padding: 1.8rem 1.5rem; box-shadow: var(--golge); border: 1px solid #ecdccb; }
-    .stars { color: #e2b643; margin-bottom: 0.8rem; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .review-card {
+      background: var(--krem);
+      border-radius: var(--radius-yumusak);
+      padding: 2rem 1.8rem;
+      box-shadow: var(--golge);
+      border: 1px solid #ecdccb;
+      transition: var(--gecis);
+      position: relative;
+      overflow: hidden;
+    }
+    .review-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--golge-koyu);
+      border-color: var(--orta-kahve);
+    }
+    .review-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--acik-kahve);
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      line-height: 1;
+      z-index: 0;
+    }
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .reviewer-avatar {
+      width: 48px;
+      height: 48px;
+      background: var(--kahve);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(110, 70, 30, 0.3);
+    }
+    .reviewer-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .reviewer-name {
+      font-weight: 700;
+      color: var(--koyu-kahve);
+      font-size: 1rem;
+    }
+    .stars {
+      color: #e2b643;
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+    .review-text {
+      color: #4a3b2f;
+      font-style: italic;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+      font-size: 0.95rem;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: #4caf50;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+    .verified-badge i {
+      font-size: 0.8rem;
+    }
 
     .hours-section { padding: 4rem 1.5rem; background: var(--krem); display: flex; flex-wrap: wrap; gap: 2rem; max-width: 1200px; margin: auto; align-items: center; }
     .hours-box { background: white; padding: 2rem; border-radius: var(--radius-yumusak); box-shadow: var(--golge); flex: 1 1 280px; }
@@ -396,8 +482,10 @@
       .menu-container { grid-template-columns: 1fr; gap: 1.5rem; }
       .menu-category { padding: 1.5rem; }
       
+      .reviews-grid { grid-template-columns: 1fr; }
+      
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      .review-card { min-width: 240px; padding: 1.4rem; }
+      .review-card { min-width: auto; padding: 1.5rem; }
     }
   </style>
 </head>
@@ -468,7 +556,6 @@
     </div>
   </section>
 
-  <!-- YENİ MENÜ: SICAK & SOĞUK İÇECEKLER -->
   <section class="menu-section" id="menu">
     <div class="section-title reveal reveal-up">
       <h2 data-i18n="menu_title">İçecek Menüsü</h2>
@@ -476,7 +563,6 @@
       <p data-i18n="menu_sub">Sıcak & Soğuk Seçenekler</p>
     </div>
     <div class="menu-container">
-      <!-- Sıcak İçecekler -->
       <div class="menu-category reveal reveal-left">
         <h3><i class="fas fa-mug-hot"></i> <span data-i18n="hot_drinks">Sıcak İçecekler</span></h3>
         <ul class="menu-list">
@@ -501,7 +587,6 @@
           <li>Extra Espresso Shot</li>
         </ul>
       </div>
-      <!-- Soğuk İçecekler -->
       <div class="menu-category reveal reveal-right">
         <h3><i class="fas fa-snowflake"></i> <span data-i18n="cold_drinks">Soğuk İçecekler</span></h3>
         <ul class="menu-list">
@@ -528,9 +613,59 @@
     </div>
   </section>
 
+  <!-- GERÇEK YORUMLAR -->
   <section class="reviews-section" id="reviews">
-    <div class="section-title reveal reveal-up"><h2 data-i18n="reviews_title">Misafir Yorumları</h2><div class="alt-cizgi"></div><p data-i18n="reviews_sub">Google'da bizi değerlendirenler</p></div>
-    <div class="reviews-track" id="reviewsTrack"></div>
+    <div class="section-title reveal reveal-up">
+      <h2 data-i18n="reviews_title">Misafir Yorumları</h2>
+      <div class="alt-cizgi"></div>
+      <p data-i18n="reviews_sub">Google'da bizi değerlendirenler</p>
+    </div>
+    <div class="reviews-grid">
+      <!-- Ahmet Can Çakar -->
+      <div class="review-card reveal reveal-up">
+        <div class="review-header">
+          <div class="reviewer-avatar">AÇ</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Ahmet Can Çakar</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="review-text">"Mekan küçük olmasına rağmen toplantım varken yardımcı oldular. Kahve içtim ve şu ana kadar içtiğim en güzel latte idi. Tam ayarında yaptıklarını düşünüyorum, kesinlikle zincir kahvecilerden farklı, tavsiye ederim."</p>
+        <div class="verified-badge"><i class="fas fa-check-circle"></i> Google yorumu</div>
+      </div>
+
+      <!-- Manuel Figus -->
+      <div class="review-card reveal reveal-up">
+        <div class="review-header">
+          <div class="reviewer-avatar">MF</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Manuel Figus</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="review-text">"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I'll be back."</p>
+        <div class="verified-badge"><i class="fas fa-check-circle"></i> Google review</div>
+      </div>
+
+      <!-- Siraç Topaloğlu -->
+      <div class="review-card reveal reveal-up">
+        <div class="review-header">
+          <div class="reviewer-avatar">ST</div>
+          <div class="reviewer-info">
+            <span class="reviewer-name">Siraç Topaloğlu</span>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <p class="review-text">"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."</p>
+        <div class="verified-badge"><i class="fas fa-check-circle"></i> Google yorumu</div>
+      </div>
+    </div>
   </section>
 
   <section class="hours-section" id="contact">
@@ -645,29 +780,6 @@
           address: "Caferağa Mah. Moda Cad. No:12, Kadıköy", footer_text: "© 2025 Piccolo Cafe • Piccola pausa, grande sapore."
         }
       };
-
-      const reviewsData = [
-        { stars: 5, text: '"Kahveleri harika, atmosfer çok sıcak."', reviewer: '— Ayşe Y.' },
-        { stars: 5, text: '"Espresso\'su İtalya\'dakileri aratmıyor."', reviewer: '— Mehmet K.' },
-        { stars: 4.5, text: '"Kruvasanları enfes, güler yüzlü ekip."', reviewer: '— Zeynep T.' },
-        { stars: 5, text: '"Filtre kahve ve cheesecake efsane!"', reviewer: '— Ali V.' },
-        { stars: 5, text: '"Piccolo\'da vakit geçirmek terapi."', reviewer: '— Elif D.' }
-      ];
-
-      function renderReviews() {
-        const track = document.getElementById('reviewsTrack');
-        let html = '';
-        for (let i = 0; i < 2; i++) {
-          reviewsData.forEach(r => {
-            let starsHtml = '';
-            for (let s = 0; s < Math.floor(r.stars); s++) starsHtml += '<i class="fas fa-star"></i>';
-            if (r.stars % 1 !== 0) starsHtml += '<i class="fas fa-star-half-alt"></i>';
-            html += `<div class="review-card"><div class="stars">${starsHtml}</div><p class="review-text">${r.text}</p><span class="reviewer">${r.reviewer}</span></div>`;
-          });
-        }
-        track.innerHTML = html;
-      }
-      renderReviews();
 
       function setLanguage(lang) {
         const t = translations[lang];
