@@ -10,152 +10,1115 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cream: #F5ECD7; --warm-white: #FBF7F0; --latte: #C8A97E; --espresso: #3D1F0D;
-            --mocha: #6B3A2A; --caramel: #A0632A; --foam: #EDE0CC; --dark-roast: #1A0A04; --gold: #C9A84C;
+            --cream: #F5ECD7;
+            --warm-white: #FBF7F0;
+            --latte: #C8A97E;
+            --espresso: #3D1F0D;
+            --mocha: #6B3A2A;
+            --caramel: #A0632A;
+            --foam: #EDE0CC;
+            --dark-roast: #1A0A04;
+            --gold: #C9A84C;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { background: var(--dark-roast); color: var(--cream); font-family: 'Montserrat', sans-serif; overflow-x: hidden; cursor: none; font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-        .cursor { position: fixed; width: 12px; height: 12px; background: var(--latte); border-radius: 50%; pointer-events: none; z-index: 99999; transition: transform 0.1s ease; mix-blend-mode: screen; }
-        .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--latte); border-radius: 50%; pointer-events: none; z-index: 99998; transition: all 0.15s ease; opacity: 0.5; }
-        @media (max-width: 1024px) { body { cursor: auto; } .cursor, .cursor-ring { display: none; } }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 48px; height: 80px; display: flex; align-items: center; justify-content: space-between; background: rgba(26,10,4,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(200,169,126,0.1); transition: background 0.3s; }
-        nav.scrolled { background: rgba(26,10,4,0.95); }
-        .nav-glow-line { position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; overflow: hidden; }
-        .nav-glow-line svg { width: 200%; height: 2px; display: block; transition: transform 0.05s linear; }
-        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--cream); letter-spacing: 0.05em; }
-        .nav-logo-text span { color: var(--latte); }
-        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-        .nav-links a { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--foam); text-decoration: none; position: relative; opacity: 0.75; transition: opacity 0.3s; }
-        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--latte); transition: width 0.3s ease; box-shadow: 0 0 6px var(--latte); }
-        .nav-links a:hover { opacity: 1; } .nav-links a:hover::after { width: 100%; }
-        .lang-toggle { display: flex; gap: 6px; align-items: center; background: rgba(200,169,126,0.08); border: 1px solid rgba(200,169,126,0.2); border-radius: 20px; padding: 4px 6px; }
-        .lang-btn { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 16px; border: none; background: transparent; color: var(--foam); cursor: pointer; transition: all 0.3s; opacity: 0.5; }
-        .lang-btn.active { background: var(--latte); color: var(--espresso); opacity: 1; font-weight: 700; }
-        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 1002; }
-        .hamburger span { width: 24px; height: 2px; background: var(--cream); border-radius: 2px; transition: 0.3s; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
-        #hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .hero-bg { position: absolute; inset: 0; z-index: 0; }
-        .bg-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 2s ease; background-size: cover; background-position: center; animation: kenburns 10s ease infinite; }
-        .bg-slide.active { opacity: 1; }
-        @keyframes kenburns { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
-        .bg-slide:nth-child(1) { background-image: radial-gradient(ellipse at 30% 60%, rgba(107,58,42,0.7) 0%, rgba(26,10,4,0.85) 60%), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&auto=format&fit=crop'); }
-        .bg-slide:nth-child(2) { background-image: radial-gradient(ellipse at 70% 40%, rgba(160,99,42,0.6) 0%, rgba(26,10,4,0.85) 60%), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&auto=format&fit=crop'); }
-        .bg-slide:nth-child(3) { background-image: radial-gradient(ellipse at 50% 80%, rgba(61,31,13,0.8) 0%, rgba(26,10,4,0.9) 60%), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&auto=format&fit=crop'); }
-        .particles { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
-        .particle { position: absolute; width: 2px; height: 2px; background: var(--latte); border-radius: 50%; opacity: 0; animation: floatParticle var(--dur, 8s) ease-in-out var(--delay, 0s) infinite; }
-        @keyframes floatParticle { 0% { transform: translateY(100vh) translateX(0); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.3; } 100% { transform: translateY(-10vh) translateX(var(--dx, 20px)); opacity: 0; } }
-        .atom-scene { position: absolute; right: 8%; top: 50%; transform: translateY(-50%); width: 320px; height: 320px; z-index: 2; }
-        .atom-core { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; background: radial-gradient(circle at 35% 35%, var(--cream), var(--latte), var(--caramel)); border-radius: 50%; box-shadow: 0 0 20px var(--latte), 0 0 60px rgba(200,169,126,0.4), 0 0 120px rgba(200,169,126,0.15); animation: corePulse 2.5s ease-in-out infinite; }
-        @keyframes corePulse { 0%,100% { transform: translate(-50%,-50%) scale(1); box-shadow: 0 0 20px var(--latte), 0 0 60px rgba(200,169,126,0.4); } 50% { transform: translate(-50%,-50%) scale(1.25); box-shadow: 0 0 35px var(--latte), 0 0 90px rgba(200,169,126,0.6), 0 0 160px rgba(200,169,126,0.2); } }
-        .orbit { position: absolute; top: 50%; left: 50%; border: 1px solid rgba(200,169,126,0.35); border-radius: 50%; transform-origin: center; }
-        .orbit-1 { width: 140px; height: 60px; margin: -30px 0 0 -70px; animation: orbit1 4s linear infinite; transform: rotateX(70deg) rotateZ(0deg); box-shadow: 0 0 8px rgba(200,169,126,0.2); }
-        .orbit-2 { width: 180px; height: 70px; margin: -35px 0 0 -90px; animation: orbit2 6s linear infinite; transform: rotateX(70deg) rotateZ(60deg); }
-        .orbit-3 { width: 240px; height: 90px; margin: -45px 0 0 -120px; animation: orbit3 9s linear infinite; transform: rotateX(70deg) rotateZ(120deg); }
-        @keyframes orbit1 { from { transform: rotateX(70deg) rotateZ(0deg); } to { transform: rotateX(70deg) rotateZ(360deg); } }
-        @keyframes orbit2 { from { transform: rotateX(70deg) rotateZ(60deg); } to { transform: rotateX(70deg) rotateZ(420deg); } }
-        @keyframes orbit3 { from { transform: rotateX(70deg) rotateZ(120deg); } to { transform: rotateX(70deg) rotateZ(480deg); } }
-        .electron { position: absolute; width: 10px; height: 10px; background: var(--latte); border-radius: 50%; box-shadow: 0 0 12px var(--latte), 0 0 24px rgba(200,169,126,0.5); top: 50%; left: 0; margin: -5px 0 0 -5px; }
-        .hero-content { position: relative; z-index: 3; max-width: 580px; padding: 0 48px; left: 0; }
-        .hero-tag { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.3em; color: var(--latte); text-transform: uppercase; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
-        .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 7vw, 88px); font-weight: 900; line-height: 1.0; color: var(--warm-white); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.9s 0.5s forwards; }
-        .hero-title em { font-style: italic; color: var(--latte); display: block; }
-        .hero-sub { font-size: clamp(16px, 2vw, 19px); font-weight: 300; line-height: 1.7; color: var(--foam); opacity: 0.8; margin-bottom: 48px; opacity: 0; animation: fadeUp 0.9s 0.7s forwards; }
-        .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s 0.9s forwards; }
-        .btn-primary { padding: 14px 36px; background: linear-gradient(135deg, var(--latte), var(--caramel)); color: var(--espresso); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; text-decoration: none; display: inline-block; }
-        .btn-primary::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.15); transform: translateX(-100%) skewX(-20deg); transition: transform 0.4s; }
-        .btn-primary:hover::before { transform: translateX(100%) skewX(-20deg); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,169,126,0.4); }
-        .btn-ghost { padding: 13px 36px; background: transparent; color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(200,169,126,0.4); cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
-        .btn-ghost:hover { border-color: var(--latte); background: rgba(200,169,126,0.08); box-shadow: 0 0 20px rgba(200,169,126,0.15); }
-        .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeUp 1s 1.5s forwards; }
-        .scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--latte), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-        @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(0.6); } }
-        .scroll-text { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.3em; color: var(--latte); opacity: 0.6; text-transform: uppercase; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-        section { padding: 120px 48px; position: relative; overflow: hidden; }
-        .section-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: var(--latte); text-transform: uppercase; margin-bottom: 16px; opacity: 0.8; }
-        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 700; line-height: 1.1; color: var(--warm-white); margin-bottom: 20px; }
-        .section-title span { color: var(--latte); }
-        #about { background: linear-gradient(180deg, var(--dark-roast) 0%, #2A1208 50%, var(--dark-roast) 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; padding: 120px 80px; }
-        .about-card { background: linear-gradient(135deg, rgba(200,169,126,0.08), rgba(107,58,42,0.15)); border: 1px solid rgba(200,169,126,0.15); padding: 60px 48px; position: relative; overflow: hidden; }
-        .about-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 0deg, rgba(200,169,126,0.05) 60deg, transparent 120deg); animation: rotateConic 12s linear infinite; }
-        @keyframes rotateConic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .about-number { font-family: 'Playfair Display', serif; font-size: 120px; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(200,169,126,0.2); display: block; margin-bottom: -20px; }
-        .about-card-title { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--cream); margin-bottom: 12px; position: relative; }
-        .about-card-body { font-size: 16px; line-height: 1.8; color: var(--foam); opacity: 0.85; position: relative; }
-        .about-text .section-body { font-size: clamp(16px, 2vw, 18px); line-height: 1.9; color: var(--foam); opacity: 0.85; margin-bottom: 32px; }
-        .stat-row { display: flex; gap: 48px; margin-top: 48px; }
-        .stat-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--latte); line-height: 1; display: block; }
-        .stat-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--foam); opacity: 0.6; text-transform: uppercase; }
-        #menu { background: var(--dark-roast); max-width: 1300px; margin: 0 auto; padding: 120px 80px; }
-        .menu-header { text-align: center; margin-bottom: 80px; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 60px; }
-        .menu-item { background: linear-gradient(145deg, rgba(200,169,126,0.06), rgba(107,58,42,0.1)); border: 1px solid rgba(200,169,126,0.1); padding: 32px 28px; position: relative; overflow: hidden; transition: all 0.4s; cursor: pointer; }
-        .menu-item::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--latte), var(--caramel)); transition: width 0.4s ease; box-shadow: 0 0 10px var(--latte); }
-        .menu-item:hover { transform: translateY(-4px); border-color: rgba(200,169,126,0.25); background: rgba(200,169,126,0.08); }
-        .menu-item:hover::after { width: 100%; }
-        .item-name { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--cream); margin-bottom: 8px; }
-        .item-desc { font-size: 14px; line-height: 1.6; color: var(--foam); opacity: 0.7; }
-        #gallery { padding: 120px 0; background: linear-gradient(180deg, var(--dark-roast), #200E06, var(--dark-roast)); overflow: hidden; }
-        .gallery-header { text-align: center; margin-bottom: 60px; padding: 0 48px; }
-        .gallery-track-wrap { overflow: hidden; margin-bottom: 20px; }
-        .gallery-track { display: flex; gap: 20px; animation: galleryScroll 30s linear infinite; width: max-content; }
-        .gallery-track:nth-child(2) { animation-direction: reverse; animation-duration: 25s; }
-        @keyframes galleryScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .gallery-card { width: 280px; height: 200px; flex-shrink: 0; border-radius: 12px; overflow: hidden; position: relative; border: 1px solid rgba(200,169,126,0.15); transition: all 0.4s ease; cursor: pointer; }
-        .gallery-card:hover { transform: translateY(-6px); border-color: var(--latte); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(200,169,126,0.15); }
-        .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
-        .gallery-card:hover img { transform: scale(1.08); }
-        .gallery-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,10,4,0.7) 0%, transparent 50%); z-index: 1; pointer-events: none; }
-        .gallery-card .gallery-label { position: absolute; bottom: 16px; left: 16px; font-family: 'Playfair Display', serif; font-size: 18px; color: var(--cream); z-index: 2; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
-        #testimonials { background: var(--dark-roast); padding: 120px 80px; max-width: 1300px; margin: 0 auto; }
-        .testimonials-header { text-align: center; margin-bottom: 80px; }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-        .testimonial-card { background: linear-gradient(145deg, rgba(200,169,126,0.06), rgba(107,58,42,0.08)); border: 1px solid rgba(200,169,126,0.1); padding: 40px 32px; transition: all 0.4s; }
-        .testimonial-card:hover { border-color: rgba(200,169,126,0.3); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-        .testimonial-quote { font-size: 48px; color: var(--latte); opacity: 0.3; line-height: 1; font-family: 'Playfair Display', serif; margin-bottom: 12px; }
-        .testimonial-text { font-size: 16px; font-style: italic; line-height: 1.8; color: var(--foam); opacity: 0.9; margin-bottom: 28px; }
-        .testimonial-author { display: flex; align-items: center; gap: 14px; }
-        .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--mocha), var(--caramel)); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); font-weight: 700; }
-        .author-name { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--cream); }
-        .stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 8px; }
-        #contact { background: linear-gradient(180deg, var(--dark-roast), #120500); padding: 120px 80px; max-width: 1300px; margin: 0 auto; }
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-        .contact-info .section-body { font-size: 16px; line-height: 1.8; color: var(--foam); opacity: 0.85; margin-bottom: 48px; }
-        .info-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 28px; }
-        .info-icon { width: 40px; height: 40px; border: 1px solid rgba(200,169,126,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(200,169,126,0.05); }
-        .info-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; color: var(--latte); text-transform: uppercase; margin-bottom: 4px; }
-        .info-value { font-size: 15px; color: var(--cream); line-height: 1.5; }
-        .res-form { display: flex; flex-direction: column; gap: 20px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--latte); opacity: 0.8; }
-        .form-input { background: rgba(200,169,126,0.05); border: 1px solid rgba(200,169,126,0.2); padding: 14px 16px; color: var(--cream); font-family: 'Montserrat', sans-serif; font-size: 15px; outline: none; transition: border-color 0.3s, box-shadow 0.3s; cursor: pointer; }
-        .form-input:focus { border-color: var(--latte); box-shadow: 0 0 16px rgba(200,169,126,0.1); }
-        .form-input::placeholder { color: rgba(200,169,126,0.3); }
-        footer { background: var(--dark-roast); border-top: 1px solid rgba(200,169,126,0.1); padding: 60px 80px 40px; }
-        .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; gap: 40px; flex-wrap: wrap; }
-        .footer-tagline { font-size: 14px; color: var(--foam); opacity: 0.5; margin-top: 8px; font-style: italic; }
-        .footer-links-col h4 { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.25em; color: var(--latte); text-transform: uppercase; margin-bottom: 20px; }
-        .footer-links-col ul li { margin-bottom: 10px; }
-        .footer-links-col ul li a { font-size: 15px; color: var(--foam); opacity: 0.65; text-decoration: none; transition: opacity 0.3s, color 0.3s; }
-        .footer-bottom { border-top: 1px solid rgba(200,169,126,0.08); padding-top: 24px; display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--foam); opacity: 0.4; letter-spacing: 0.1em; flex-wrap: wrap; gap: 12px; }
-        .fab-container { position: fixed; bottom: 36px; right: 36px; z-index: 5000; display: flex; flex-direction: column-reverse; align-items: flex-end; gap: 12px; }
-        .fab-main { width: 56px; height: 56px; background: linear-gradient(135deg, var(--latte), var(--caramel)); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(200,169,126,0.4); transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); z-index: 2; }
-        .fab-main.open { transform: rotate(135deg); background: linear-gradient(135deg, var(--mocha), var(--espresso)); }
-        .fab-sub { display: flex; flex-direction: column; gap: 10px; overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.5s ease, opacity 0.3s; }
-        .fab-sub.open { max-height: 200px; opacity: 1; }
-        .fab-action { width: 44px; height: 44px; background: rgba(200,169,126,0.15); border: 1px solid rgba(200,169,126,0.35); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; transform: translateY(20px) scale(0.8); }
-        .fab-sub.open .fab-action { transform: translateY(0) scale(1); }
-        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); opacity: 0.35; }
-        @media (max-width:1024px) { .atom-scene { display: none; } #about { grid-template-columns: 1fr; padding: 80px 40px; } .testimonials-grid { grid-template-columns: 1fr; } .contact-grid { grid-template-columns: 1fr; } }
-        @media (max-width:768px) { nav { padding: 0 24px; } .nav-links { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(26,10,4,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transform: translateY(-100%); transition: transform 0.4s ease; z-index: 1001; } .nav-links.active { transform: translateY(0); } .hamburger { display: flex; } section { padding: 80px 24px; } #menu, #testimonials, #contact { padding: 80px 24px; } footer { padding: 40px 24px; } .form-row { grid-template-columns: 1fr; } .gallery-card { width: 220px; height: 160px; } .menu-grid { grid-template-columns: 1fr; } .stat-row { gap: 24px; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--dark-roast);
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+            font-weight: 400;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: var(--latte);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: screen;
+        }
+        .cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--latte);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            transition: all 0.15s ease;
+            opacity: 0.5;
+        }
+        @media (max-width: 1024px) {
+            body {
+                cursor: auto;
+            }
+            .cursor,
+            .cursor-ring {
+                display: none;
+            }
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 48px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(26, 10, 4, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(200, 169, 126, 0.1);
+            transition: background 0.3s;
+        }
+        nav.scrolled {
+            background: rgba(26, 10, 4, 0.95);
+        }
+        .nav-glow-line {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            overflow: hidden;
+        }
+        .nav-glow-line svg {
+            width: 200%;
+            height: 2px;
+            display: block;
+            transition: transform 0.05s linear;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .nav-logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--cream);
+            letter-spacing: 0.05em;
+        }
+        .nav-logo-text span {
+            color: var(--latte);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--foam);
+            text-decoration: none;
+            position: relative;
+            opacity: 0.75;
+            transition: opacity 0.3s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--latte);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 6px var(--latte);
+        }
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .lang-toggle {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            background: rgba(200, 169, 126, 0.08);
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            border-radius: 20px;
+            padding: 4px 6px;
+        }
+        .lang-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: none;
+            background: transparent;
+            color: var(--foam);
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0.5;
+        }
+        .lang-btn.active {
+            background: var(--latte);
+            color: var(--espresso);
+            opacity: 1;
+            font-weight: 700;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1002;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--cream);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .bg-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 2s ease;
+            background-size: cover;
+            background-position: center;
+            animation: kenburns 10s ease infinite;
+        }
+        .bg-slide.active {
+            opacity: 1;
+        }
+        @keyframes kenburns {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.08);
+            }
+        }
+        .bg-slide:nth-child(1) {
+            background-image: radial-gradient(ellipse at 30% 60%, rgba(107, 58, 42, 0.7) 0%, rgba(26, 10, 4, 0.85) 60%), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&auto=format&fit=crop');
+        }
+        .bg-slide:nth-child(2) {
+            background-image: radial-gradient(ellipse at 70% 40%, rgba(160, 99, 42, 0.6) 0%, rgba(26, 10, 4, 0.85) 60%), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&auto=format&fit=crop');
+        }
+        .bg-slide:nth-child(3) {
+            background-image: radial-gradient(ellipse at 50% 80%, rgba(61, 31, 13, 0.8) 0%, rgba(26, 10, 4, 0.9) 60%), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&auto=format&fit=crop');
+        }
+        .particles {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--latte);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle var(--dur, 8s) ease-in-out var(--delay, 0s) infinite;
+        }
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(var(--dx, 20px));
+                opacity: 0;
+            }
+        }
+        .atom-scene {
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 320px;
+            height: 320px;
+            z-index: 2;
+        }
+        .atom-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 35% 35%, var(--cream), var(--latte), var(--caramel));
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--latte), 0 0 60px rgba(200, 169, 126, 0.4), 0 0 120px rgba(200, 169, 126, 0.15);
+            animation: corePulse 2.5s ease-in-out infinite;
+        }
+        @keyframes corePulse {
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 20px var(--latte), 0 0 60px rgba(200, 169, 126, 0.4);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.25);
+                box-shadow: 0 0 35px var(--latte), 0 0 90px rgba(200, 169, 126, 0.6), 0 0 160px rgba(200, 169, 126, 0.2);
+            }
+        }
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(200, 169, 126, 0.35);
+            border-radius: 50%;
+            transform-origin: center;
+        }
+        .orbit-1 {
+            width: 140px;
+            height: 60px;
+            margin: -30px 0 0 -70px;
+            animation: orbit1 4s linear infinite;
+            transform: rotateX(70deg) rotateZ(0deg);
+            box-shadow: 0 0 8px rgba(200, 169, 126, 0.2);
+        }
+        .orbit-2 {
+            width: 180px;
+            height: 70px;
+            margin: -35px 0 0 -90px;
+            animation: orbit2 6s linear infinite;
+            transform: rotateX(70deg) rotateZ(60deg);
+        }
+        .orbit-3 {
+            width: 240px;
+            height: 90px;
+            margin: -45px 0 0 -120px;
+            animation: orbit3 9s linear infinite;
+            transform: rotateX(70deg) rotateZ(120deg);
+        }
+        @keyframes orbit1 {
+            from {
+                transform: rotateX(70deg) rotateZ(0deg);
+            }
+            to {
+                transform: rotateX(70deg) rotateZ(360deg);
+            }
+        }
+        @keyframes orbit2 {
+            from {
+                transform: rotateX(70deg) rotateZ(60deg);
+            }
+            to {
+                transform: rotateX(70deg) rotateZ(420deg);
+            }
+        }
+        @keyframes orbit3 {
+            from {
+                transform: rotateX(70deg) rotateZ(120deg);
+            }
+            to {
+                transform: rotateX(70deg) rotateZ(480deg);
+            }
+        }
+        .electron {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--latte);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--latte), 0 0 24px rgba(200, 169, 126, 0.5);
+            top: 50%;
+            left: 0;
+            margin: -5px 0 0 -5px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 580px;
+            padding: 0 48px;
+            left: 0;
+        }
+        .hero-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            color: var(--latte);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.3s forwards;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(52px, 7vw, 88px);
+            font-weight: 900;
+            line-height: 1.0;
+            color: var(--warm-white);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.5s forwards;
+        }
+        .hero-title em {
+            font-style: italic;
+            color: var(--latte);
+            display: block;
+        }
+        .hero-sub {
+            font-size: clamp(16px, 2vw, 19px);
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--foam);
+            opacity: 0.8;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.7s forwards;
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.9s forwards;
+        }
+        .btn-primary {
+            padding: 14px 36px;
+            background: linear-gradient(135deg, var(--latte), var(--caramel));
+            color: var(--espresso);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-100%) skewX(-20deg);
+            transition: transform 0.4s;
+        }
+        .btn-primary:hover::before {
+            transform: translateX(100%) skewX(-20deg);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(200, 169, 126, 0.4);
+        }
+        .btn-ghost {
+            padding: 13px 36px;
+            background: transparent;
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: 1px solid rgba(200, 169, 126, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-ghost:hover {
+            border-color: var(--latte);
+            background: rgba(200, 169, 126, 0.08);
+            box-shadow: 0 0 20px rgba(200, 169, 126, 0.15);
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp 1s 1.5s forwards;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--latte), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(0.6);
+            }
+        }
+        .scroll-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            color: var(--latte);
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        section {
+            padding: 120px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            color: var(--latte);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--warm-white);
+            margin-bottom: 20px;
+        }
+        .section-title span {
+            color: var(--latte);
+        }
+        #about {
+            background: linear-gradient(180deg, var(--dark-roast) 0%, #2A1208 50%, var(--dark-roast) 100%);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 120px 80px;
+        }
+        .about-card {
+            background: linear-gradient(135deg, rgba(200, 169, 126, 0.08), rgba(107, 58, 42, 0.15));
+            border: 1px solid rgba(200, 169, 126, 0.15);
+            padding: 60px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(200, 169, 126, 0.05) 60deg, transparent 120deg);
+            animation: rotateConic 12s linear infinite;
+        }
+        @keyframes rotateConic {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .about-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 120px;
+            font-weight: 900;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(200, 169, 126, 0.2);
+            display: block;
+            margin-bottom: -20px;
+        }
+        .about-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--cream);
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .about-card-body {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--foam);
+            opacity: 0.85;
+            position: relative;
+        }
+        .about-text .section-body {
+            font-size: clamp(16px, 2vw, 18px);
+            line-height: 1.9;
+            color: var(--foam);
+            opacity: 0.85;
+            margin-bottom: 32px;
+        }
+        .stat-row {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+        }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--latte);
+            line-height: 1;
+            display: block;
+        }
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            color: var(--foam);
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+        #menu {
+            background: var(--dark-roast);
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 120px 80px;
+        }
+        .menu-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 60px;
+        }
+        .menu-item {
+            background: linear-gradient(145deg, rgba(200, 169, 126, 0.06), rgba(107, 58, 42, 0.1));
+            border: 1px solid rgba(200, 169, 126, 0.1);
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--latte), var(--caramel));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 10px var(--latte);
+        }
+        .menu-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(200, 169, 126, 0.25);
+            background: rgba(200, 169, 126, 0.08);
+        }
+        .menu-item:hover::after {
+            width: 100%;
+        }
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--cream);
+            margin-bottom: 8px;
+        }
+        .item-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--foam);
+            opacity: 0.7;
+        }
+        #gallery {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--dark-roast), #200E06, var(--dark-roast));
+            overflow: hidden;
+        }
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 48px;
+        }
+        .gallery-track-wrap {
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .gallery-track {
+            display: flex;
+            gap: 20px;
+            animation: galleryScroll 30s linear infinite;
+            width: max-content;
+        }
+        .gallery-track:nth-child(2) {
+            animation-direction: reverse;
+            animation-duration: 25s;
+        }
+        @keyframes galleryScroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+        .gallery-card {
+            width: 280px;
+            height: 200px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(200, 169, 126, 0.15);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--latte);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(200, 169, 126, 0.15);
+        }
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            display: block;
+        }
+        .gallery-card:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(26, 10, 4, 0.7) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .gallery-card .gallery-label {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: var(--cream);
+            z-index: 2;
+            font-weight: 600;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+        #testimonials {
+            background: var(--dark-roast);
+            padding: 120px 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .testimonial-card {
+            background: linear-gradient(145deg, rgba(200, 169, 126, 0.06), rgba(107, 58, 42, 0.08));
+            border: 1px solid rgba(200, 169, 126, 0.1);
+            padding: 40px 32px;
+            transition: all 0.4s;
+        }
+        .testimonial-card:hover {
+            border-color: rgba(200, 169, 126, 0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        .testimonial-quote {
+            font-size: 48px;
+            color: var(--latte);
+            opacity: 0.3;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 12px;
+        }
+        .testimonial-text {
+            font-size: 16px;
+            font-style: italic;
+            line-height: 1.8;
+            color: var(--foam);
+            opacity: 0.9;
+            margin-bottom: 28px;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--mocha), var(--caramel));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--cream);
+            font-weight: 700;
+        }
+        .author-name {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--cream);
+        }
+        .stars {
+            color: var(--gold);
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        #contact {
+            background: linear-gradient(180deg, var(--dark-roast), #120500);
+            padding: 120px 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .contact-info .section-body {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--foam);
+            opacity: 0.85;
+            margin-bottom: 48px;
+        }
+        .info-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(200, 169, 126, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(200, 169, 126, 0.05);
+        }
+        .info-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            color: var(--latte);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .info-value {
+            font-size: 15px;
+            color: var(--cream);
+            line-height: 1.5;
+        }
+        .res-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--latte);
+            opacity: 0.8;
+        }
+        .form-input {
+            background: rgba(200, 169, 126, 0.05);
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            padding: 14px 16px;
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .form-input:focus {
+            border-color: var(--latte);
+            box-shadow: 0 0 16px rgba(200, 169, 126, 0.1);
+        }
+        .form-input::placeholder {
+            color: rgba(200, 169, 126, 0.3);
+        }
+        footer {
+            background: var(--dark-roast);
+            border-top: 1px solid rgba(200, 169, 126, 0.1);
+            padding: 60px 80px 40px;
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 48px;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .footer-tagline {
+            font-size: 14px;
+            color: var(--foam);
+            opacity: 0.5;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .footer-links-col h4 {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.25em;
+            color: var(--latte);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .footer-links-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-links-col ul li a {
+            font-size: 15px;
+            color: var(--foam);
+            opacity: 0.65;
+            text-decoration: none;
+            transition: opacity 0.3s, color 0.3s;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(200, 169, 126, 0.08);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: var(--foam);
+            opacity: 0.4;
+            letter-spacing: 0.1em;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .fab-container {
+            position: fixed;
+            bottom: 36px;
+            right: 36px;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 12px;
+        }
+        .fab-main {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--latte), var(--caramel));
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 24px rgba(200, 169, 126, 0.4);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 2;
+        }
+        .fab-main.open {
+            transform: rotate(135deg);
+            background: linear-gradient(135deg, var(--mocha), var(--espresso));
+        }
+        .fab-sub {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.3s;
+        }
+        .fab-sub.open {
+            max-height: 200px;
+            opacity: 1;
+        }
+        .fab-action {
+            width: 44px;
+            height: 44px;
+            background: rgba(200, 169, 126, 0.15);
+            border: 1px solid rgba(200, 169, 126, 0.35);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            transform: translateY(20px) scale(0.8);
+        }
+        .fab-sub.open .fab-action {
+            transform: translateY(0) scale(1);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.35;
+        }
+        @media (max-width:1024px) {
+            .atom-scene {
+                display: none;
+            }
+            #about {
+                grid-template-columns: 1fr;
+                padding: 80px 40px;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width:768px) {
+            nav {
+                padding: 0 24px;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(26, 10, 4, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transform: translateY(-100%);
+                transition: transform 0.4s ease;
+                z-index: 1001;
+            }
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            .hamburger {
+                display: flex;
+            }
+            section {
+                padding: 80px 24px;
+            }
+            #menu,
+            #testimonials,
+            #contact {
+                padding: 80px 24px;
+            }
+            footer {
+                padding: 40px 24px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .gallery-card {
+                width: 220px;
+                height: 160px;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-row {
+                gap: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -176,52 +1139,283 @@
         <div class="scroll-indicator"><div class="scroll-line"></div><span class="scroll-text" data-i18n="scroll">Kaydır</span></div>
     </section>
     <div style="background: linear-gradient(180deg, var(--dark-roast) 0%, #2A1208 50%, var(--dark-roast) 100%);"><section id="about"><div class="about-text reveal"><p class="section-tag" data-i18n="about-tag">— Hikayemiz</p><h2 class="section-title"><span data-i18n="about-title-1">Piccolo,</span> <span style="color:var(--cream)" data-i18n="about-title-2">İtalyanca</span><br><span data-i18n="about-title-3">"küçük" demek...</span></h2><p class="section-body" data-i18n="about-body-1">2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, Kapalıçarşı'nın hemen yanı başında, tarihi dokunun içinde saklı bir hazine olarak hizmet veriyor.</p><p class="section-body" data-i18n="about-body-2">Kahvelerimiz butik kavuruculardan özenle seçilir, tatlılarımız günlük olarak el yapımı hazırlanır. Her fincanda bir hikaye var.</p><div class="stat-row"><div class="stat"><span class="stat-num">8+</span><span class="stat-label" data-i18n="stat-1">Yıl</span></div><div class="stat"><span class="stat-num">26</span><span class="stat-label" data-i18n="stat-2">İçecek</span></div><div class="stat"><span class="stat-num">4.9</span><span class="stat-label" data-i18n="stat-3">Puan</span></div></div></div><div class="about-visual reveal"><div class="about-card"><span class="about-number">01</span><h3 class="about-card-title" data-i18n="card-title-1">Çalışma Saatleri</h3><p class="about-card-body" data-i18n="card-body-1">Hafta içi her gün 08:00 – 18:00 arası açığız. Pazarları kapalıyız. Cumartesi 09:00'da açılıyoruz.</p></div></div></section></div>
-    <div style="background: var(--dark-roast);"><section id="menu"><div class="menu-header reveal"><p class="section-tag" data-i18n="menu-tag">— Lezzetlerimiz</p><h2 class="section-title" data-i18n="menu-title">İçecek <span>Menüsü</span></h2></div><div class="menu-grid" id="menuGrid">
-        <div class="menu-item reveal"><h3 class="item-name">Espresso</h3><p class="item-desc">Yoğun aromalı, klasik İtalyan usulü çift shot espresso.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Espresso Macchiato</h3><p class="item-desc">Bir damla süt köpüğü ile taçlandırılmış yoğun espresso.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Double Espresso</h3><p class="item-desc">Çift doz espresso. Ekstra yoğun, ekstra enerjik.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Americano</h3><p class="item-desc">Espresso üzerine sıcak su eklenerek hazırlanan klasik.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Cortado</h3><p class="item-desc">Espresso ve az miktarda sıcak sütün dengeli buluşması.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Latte</h3><p class="item-desc">Kremalı bir dokunuşla espresso ve bol sütün yumuşak dansı.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Flat White</h3><p class="item-desc">Yoğun ristretto bazlı, mikro-köpük sütle hazırlanan Avustralya klasiği.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Cappuccino</h3><p class="item-desc">Kadifemsi süt köpüğüyle buluşan espresso, bol köpük ve tarçın.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Filter Coffee</h3><p class="item-desc">Günün özel çekirdeği ile V60 demleme filtre kahve.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Türk Kahvesi</h3><p class="item-desc">Bol köpüklü, geleneksel Türk kahvesi. Yanında lokum ikramımızdır.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Caffè Mocha</h3><p class="item-desc">Espresso, çikolata ve sütün zengin birleşimi.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Piccolo Latte</h3><p class="item-desc">Küçük ama etkili. Ristretto üzerine ipeksi süt dokunuşu.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Vanilla Latte</h3><p class="item-desc">Gerçek vanilya özü ile tatlandırılmış kremsi latte.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">White Chocolate Mocha</h3><p class="item-desc">Beyaz çikolata, espresso ve süt. Tatlı bir kaçamak.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Caramel Latte</h3><p class="item-desc">Ev yapımı karamel sosu ile zenginleştirilmiş latte.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Chai Tea Latte</h3><p class="item-desc">Baharatlı Hint çayı ve buharlanmış süt ile egzotik bir lezzet.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Sıcak Çikolata</h3><p class="item-desc">Belçika çikolatası ile hazırlanan yoğun sıcak çikolata.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Bitki Çayı</h3><p class="item-desc">Mevsimsel olarak değişen özel bitki çayı seçkisi.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Extra Espresso Shot</h3><p class="item-desc">İçeceğinize ekstra espresso shot ekletmek ister misiniz?</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced Caffè Latte</h3><p class="item-desc">Soğuk süt ve buz ile hazırlanan ferahlatıcı latte.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced Coffee Americano</h3><p class="item-desc">Buz üzerine espresso ve soğuk su. Serin ve yoğun.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced Caramel Latte</h3><p class="item-desc">Buz, süt, espresso ve ev yapımı karamel sosu.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced Caffè Mocha</h3><p class="item-desc">Soğuk çikolata ve espresso bir arada. Tatlı ve serin.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced White Chocolate Mocha</h3><p class="item-desc">Beyaz çikolata, espresso ve soğuk süt. Yazın favorisi.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced Chai Tea Latte</h3><p class="item-desc">Soğuk baharatlı Hint çayı ve süt. Egzotik ferahlık.</p></div>
-        <div class="menu-item reveal"><h3 class="item-name">Iced Raspberry</h3><p class="item-desc">Taze ahududu püresi ile hazırlanan serin içecek.</p></div>
-    </div></section></div>
+    <div style="background: var(--dark-roast);"><section id="menu"><div class="menu-header reveal"><p class="section-tag" data-i18n="menu-tag">— Lezzetlerimiz</p><h2 class="section-title" data-i18n="menu-title">İçecek <span>Menüsü</span></h2></div><div class="menu-grid" id="menuGrid"></div></section></div>
     <section id="gallery" style="padding:120px 0;"><div class="gallery-header reveal"><p class="section-tag" data-i18n="gallery-tag">— Atmosfer</p><h2 class="section-title" data-i18n="gallery-title">Piccolo'da <span>Bir Gün</span></h2></div><div class="gallery-track-wrap"><div class="gallery-track" id="galleryTrack1"></div></div><div class="gallery-track-wrap"><div class="gallery-track" id="galleryTrack2" style="animation-direction: reverse; animation-duration: 22s;"></div></div></section>
-    <div style="background: var(--dark-roast);"><section id="testimonials"><div class="testimonials-header reveal"><p class="section-tag" data-i18n="reviews-tag">— Müşteri Yorumları</p><h2 class="section-title" data-i18n="reviews-title">Onlar Ne <span>Dedi?</span></h2></div><div class="testimonials-grid">
-        <div class="testimonial-card reveal"><div class="stars">★★★★★</div><p class="testimonial-quote">"</p><p class="testimonial-text">"Mekan küçük olmasına rağmen toplantım varken yardımcı oldular. Kahve içtim ve şu ana kadar içtiğim en güzel latte idi. Tam ayarında yaptıklarını düşünüyorum, kesinlikle zincir kahvecilerden farklı, tavsiye ederim."</p><div class="testimonial-author"><div class="author-avatar">AÇ</div><div><div class="author-name">Ahmet Can Çakar</div><div class="stars" style="font-size:10px;">★★★★★</div></div></div></div>
-        <div class="testimonial-card reveal"><div class="stars">★★★★★</div><p class="testimonial-quote">"</p><p class="testimonial-text">"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I'll be back."</p><div class="testimonial-author"><div class="author-avatar">MF</div><div><div class="author-name">Manuel Figus</div><div class="stars" style="font-size:10px;">★★★★★</div></div></div></div>
-        <div class="testimonial-card reveal"><div class="stars">★★★★★</div><p class="testimonial-quote">"</p><p class="testimonial-text">"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."</p><div class="testimonial-author"><div class="author-avatar">ST</div><div><div class="author-name">Siraç Topaloğlu</div><div class="stars" style="font-size:10px;">★★★★★</div></div></div></div>
-    </div></section></div>
+    <div style="background: var(--dark-roast);"><section id="testimonials"><div class="testimonials-header reveal"><p class="section-tag" data-i18n="reviews-tag">— Müşteri Yorumları</p><h2 class="section-title" data-i18n="reviews-title">Onlar Ne <span>Dedi?</span></h2></div><div class="testimonials-grid" id="testimonialsGrid"></div></section></div>
     <div style="background: linear-gradient(180deg, var(--dark-roast), #120500);"><section id="contact"><div class="contact-grid"><div class="contact-info reveal"><p class="section-tag" data-i18n="contact-tag">— Bize Ulaşın</p><h2 class="section-title" data-i18n="contact-title">Rezervasyon &<br><span>İletişim</span></h2><p class="section-body" data-i18n="contact-body">Özel etkinlikleriniz, doğum günleriniz veya iş toplantılarınız için masa rezervasyonu yapabilirsiniz.</p><div class="info-item"><div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="info-label" data-i18n="info-addr">Adres</div><div class="info-value">Karadeniz Han, Molla Fenari Mah, Beyazıt, Hüseyin Ağa Cami Sk. No17/C, 34120 Fatih/İstanbul</div></div></div><div class="info-item"><div class="info-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="info-label" data-i18n="info-hours">Çalışma Saatleri</div><div class="info-value">Hafta içi 08:00–18:00 · Cumartesi 09:00–18:00 · Pazar Kapalı</div></div></div></div><div class="reveal"><p class="section-tag" data-i18n="res-tag">— Rezervasyon</p><h3 class="section-title" style="font-size:32px;" data-i18n="res-title">Masa Ayırt</h3><br><div class="res-form"><div class="form-row"><div class="form-field"><label class="form-label" data-i18n="f-name">Ad Soyad</label><input type="text" class="form-input" placeholder="Adınız..." data-i18n-ph="f-name-ph"></div><div class="form-field"><label class="form-label" data-i18n="f-phone">Telefon</label><input type="tel" class="form-input" placeholder="+90 5xx xxx xx xx"></div></div><div class="form-row"><div class="form-field"><label class="form-label" data-i18n="f-date">Tarih</label><input type="date" class="form-input"></div><div class="form-field"><label class="form-label" data-i18n="f-guests">Kişi Sayısı</label><select class="form-input"><option data-i18n="f-g1">1-2 Kişi</option><option data-i18n="f-g2">3-4 Kişi</option><option data-i18n="f-g3">5-8 Kişi</option><option data-i18n="f-g4">9+ Kişi</option></select></div></div><div class="form-field"><label class="form-label" data-i18n="f-note">Not</label><textarea class="form-input" rows="3" placeholder="Özel istekleriniz..." style="resize:vertical;" data-i18n-ph="f-note-ph"></textarea></div><button class="btn-primary" style="width:100%; text-align:center; padding:18px;" data-i18n="f-submit">Rezervasyon Yap</button></div></div></div></section></div>
     <footer><div class="footer-top"><div class="footer-brand"><div class="nav-logo-text">Piccolo <span style="color:var(--latte)">Cafe</span></div><p class="footer-tagline" data-i18n="footer-tag">Her yudumda bir hikaye.</p></div><div class="footer-links-col"><h4 data-i18n="fl-1">Menü</h4><ul><li><a href="#" data-i18n="fl-1a">Sıcak İçecekler</a></li><li><a href="#" data-i18n="fl-1b">Soğuk İçecekler</a></li></ul></div><div class="footer-links-col"><h4 data-i18n="fl-2">Bağlantılar</h4><ul><li><a href="#about" data-i18n="fl-2a">Hakkımızda</a></li><li><a href="#contact" data-i18n="fl-2c">Rezervasyon</a></li></ul></div><div class="footer-links-col"><h4 data-i18n="fl-3">Sosyal</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Google Maps</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 Piccolo Cafe. <span data-i18n="footer-rights">Tüm hakları saklıdır.</span></span><span data-i18n="footer-made">İstanbul ile ❤️ yapıldı</span></div></footer>
     <div class="fab-container"><button class="fab-main" id="fabMain" title="İletişim"><svg class="fab-icon" id="fabIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3D1F0D" stroke-width="2.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button><div class="fab-sub" id="fabSub"><button class="fab-action" title="Ara"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button><button class="fab-action" title="E-posta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></button><button class="fab-action" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></button></div></div>
     <script>
         const i18n = {
-            tr: { 'nav-about': 'Hakkımızda', 'nav-menu': 'Menü', 'nav-gallery': 'Galeri', 'nav-reviews': 'Yorumlar', 'nav-contact': 'İletişim', 'hero-tag': "— 2018'den beri İstanbul", 'hero-title-1': 'Küçük bir mola,', 'hero-title-2': 'büyük bir lezzet.', 'hero-sub': "Piccolo Cafe'de her yudumda taze çekilmiş kahvenin sıcaklığını hissedin. Butik atmosfer, el yapımı tatlar.", 'hero-cta1': 'Menüyü Keşfet', 'hero-cta2': 'Bize Ulaşın', 'scroll': 'Kaydır', 'about-tag': '— Hikayemiz', 'about-title-1': 'Piccolo,', 'about-title-2': 'İtalyanca', 'about-title-3': '"küçük" demek...', 'about-body-1': "2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, Kapalıçarşı'nın hemen yanı başında, tarihi dokunun içinde saklı bir hazine olarak hizmet veriyor.", 'about-body-2': 'Kahvelerimiz butik kavuruculardan özenle seçilir, tatlılarımız günlük olarak el yapımı hazırlanır. Her fincanda bir hikaye var.', 'stat-1': 'Yıl', 'stat-2': 'İçecek', 'stat-3': 'Puan', 'card-title-1': 'Çalışma Saatleri', 'card-body-1': "Hafta içi her gün 08:00 – 18:00 arası açığız. Pazarları kapalıyız. Cumartesi 09:00'da açılıyoruz.", 'menu-tag': '— Lezzetlerimiz', 'menu-title': 'İçecek Menüsü', 'gallery-tag': '— Atmosfer', 'gallery-title': "Piccolo'da Bir Gün", 'reviews-tag': '— Müşteri Yorumları', 'reviews-title': 'Onlar Ne Dedi?', 'contact-tag': '— Bize Ulaşın', 'contact-title': 'Rezervasyon & İletişim', 'contact-body': 'Özel etkinlikleriniz, doğum günleriniz veya iş toplantılarınız için masa rezervasyonu yapabilirsiniz.', 'info-addr': 'Adres', 'info-hours': 'Çalışma Saatleri', 'res-tag': '— Rezervasyon', 'res-title': 'Masa Ayırt', 'f-name': 'Ad Soyad', 'f-name-ph': 'Adınız...', 'f-phone': 'Telefon', 'f-date': 'Tarih', 'f-guests': 'Kişi Sayısı', 'f-g1': '1-2 Kişi', 'f-g2': '3-4 Kişi', 'f-g3': '5-8 Kişi', 'f-g4': '9+ Kişi', 'f-note': 'Not', 'f-note-ph': 'Özel istekleriniz...', 'f-submit': 'Rezervasyon Yap', 'footer-tag': 'Her yudumda bir hikaye.', 'footer-rights': 'Tüm hakları saklıdır.', 'footer-made': 'İstanbul ile ❤️ yapıldı', 'fl-1': 'Menü', 'fl-1a': 'Sıcak İçecekler', 'fl-1b': 'Soğuk İçecekler', 'fl-2': 'Bağlantılar', 'fl-2a': 'Hakkımızda', 'fl-2c': 'Rezervasyon', 'fl-3': 'Sosyal' },
-            en: { 'nav-about': 'About', 'nav-menu': 'Menu', 'nav-gallery': 'Gallery', 'nav-reviews': 'Reviews', 'nav-contact': 'Contact', 'hero-tag': '— Since 2018 in Istanbul', 'hero-title-1': 'A little break,', 'hero-title-2': 'big flavor.', 'hero-sub': 'Feel the warmth of freshly ground coffee with every sip at Piccolo Cafe. Boutique atmosphere, handmade tastes.', 'hero-cta1': 'Explore Menu', 'hero-cta2': 'Contact Us', 'scroll': 'Scroll', 'about-tag': '— Our Story', 'about-title-1': 'Piccolo,', 'about-title-2': 'means "small"', 'about-title-3': 'in Italian...', 'about-body-1': 'Since 2018, Piccolo Cafe has been welcoming guests with homemade flavors and carefully selected beans, serving as a hidden gem right next to the Grand Bazaar.', 'about-body-2': 'Our coffees are carefully selected from boutique roasters, our desserts are handmade daily. Every cup tells a story.', 'stat-1': 'Years', 'stat-2': 'Drinks', 'stat-3': 'Rating', 'card-title-1': 'Working Hours', 'card-body-1': 'Open weekdays 08:00–18:00. Closed on Sundays. Saturdays open at 09:00.', 'menu-tag': '— Our Flavors', 'menu-title': 'Drink Menu', 'gallery-tag': '— Atmosphere', 'gallery-title': 'A Day at Piccolo', 'reviews-tag': '— Customer Reviews', 'reviews-title': 'What They Said?', 'contact-tag': '— Get in Touch', 'contact-title': 'Reservation & Contact', 'contact-body': 'Make table reservations for special events, birthdays, or business meetings.', 'info-addr': 'Address', 'info-hours': 'Working Hours', 'res-tag': '— Reservation', 'res-title': 'Book a Table', 'f-name': 'Full Name', 'f-name-ph': 'Your name...', 'f-phone': 'Phone', 'f-date': 'Date', 'f-guests': 'Guests', 'f-g1': '1-2 People', 'f-g2': '3-4 People', 'f-g3': '5-8 People', 'f-g4': '9+ People', 'f-note': 'Note', 'f-note-ph': 'Special requests...', 'f-submit': 'Make Reservation', 'footer-tag': 'A story in every sip.', 'footer-rights': 'All rights reserved.', 'footer-made': 'Made with ❤️ in Istanbul', 'fl-1': 'Menu', 'fl-1a': 'Hot Drinks', 'fl-1b': 'Cold Drinks', 'fl-2': 'Links', 'fl-2a': 'About', 'fl-2c': 'Reservation', 'fl-3': 'Social' },
-            de: { 'nav-about': 'Über uns', 'nav-menu': 'Speisekarte', 'nav-gallery': 'Galerie', 'nav-reviews': 'Bewertungen', 'nav-contact': 'Kontakt', 'hero-tag': '— Seit 2018 in Istanbul', 'hero-title-1': 'Eine kleine Pause,', 'hero-title-2': 'großer Geschmack.', 'hero-sub': 'Spüren Sie die Wärme frisch gemahlenen Kaffees im Piccolo Cafe. Boutique-Atmosphäre, handgemacht.', 'hero-cta1': 'Speisekarte', 'hero-cta2': 'Kontakt', 'scroll': 'Scrollen', 'about-tag': '— Unsere Geschichte', 'about-title-1': 'Piccolo,', 'about-title-2': 'bedeutet "klein"', 'about-title-3': 'auf Italienisch...', 'about-body-1': 'Seit 2018 empfängt das Piccolo Cafe Gäste mit hausgemachten Leckereien und ausgewählten Bohnen, ein verstecktes Juwel direkt neben dem Großen Basar.', 'about-body-2': 'Unsere Kaffees werden sorgfältig von Boutique-Röstern ausgewählt, unsere Desserts täglich handgemacht. Jede Tasse erzählt eine Geschichte.', 'stat-1': 'Jahre', 'stat-2': 'Getränke', 'stat-3': 'Bewertung', 'card-title-1': 'Öffnungszeiten', 'card-body-1': 'Wochentags 08:00–18:00. Sonntags geschlossen. Samstags ab 09:00.', 'menu-tag': '— Unsere Spezialitäten', 'menu-title': 'Getränkekarte', 'gallery-tag': '— Atmosphäre', 'gallery-title': 'Ein Tag bei Piccolo', 'reviews-tag': '— Kundenbewertungen', 'reviews-title': 'Was Sie sagten?', 'contact-tag': '— Kontakt', 'contact-title': 'Reservierung & Kontakt', 'contact-body': 'Für besondere Veranstaltungen, Geburtstage oder Geschäftstreffen können Sie einen Tisch reservieren.', 'info-addr': 'Adresse', 'info-hours': 'Öffnungszeiten', 'res-tag': '— Reservierung', 'res-title': 'Tisch Reservieren', 'f-name': 'Name', 'f-name-ph': 'Ihr Name...', 'f-phone': 'Telefon', 'f-date': 'Datum', 'f-guests': 'Gäste', 'f-g1': '1-2 Personen', 'f-g2': '3-4 Personen', 'f-g3': '5-8 Personen', 'f-g4': '9+ Personen', 'f-note': 'Anmerkung', 'f-note-ph': 'Besondere Wünsche...', 'f-submit': 'Reservieren', 'footer-tag': 'Eine Geschichte in jedem Schluck.', 'footer-rights': 'Alle Rechte vorbehalten.', 'footer-made': 'Mit ❤️ in Istanbul gemacht', 'fl-1': 'Speisekarte', 'fl-1a': 'Heiße Getränke', 'fl-1b': 'Kalte Getränke', 'fl-2': 'Links', 'fl-2a': 'Über uns', 'fl-2c': 'Reservierung', 'fl-3': 'Sozial' },
-            ru: { 'nav-about': 'О нас', 'nav-menu': 'Меню', 'nav-gallery': 'Галерея', 'nav-reviews': 'Отзывы', 'nav-contact': 'Контакты', 'hero-tag': '— С 2018 года в Стамбуле', 'hero-title-1': 'Маленький перерыв,', 'hero-title-2': 'большой вкус.', 'hero-sub': 'Почувствуйте тепло свежесваренного кофе в Piccolo Cafe. Бутик-атмосфера, ручная работа.', 'hero-cta1': 'Меню', 'hero-cta2': 'Контакты', 'scroll': 'Скролл', 'about-tag': '— Наша история', 'about-title-1': 'Piccolo,', 'about-title-2': 'по-итальянски', 'about-title-3': '"маленький"...', 'about-body-1': 'С 2018 года Piccolo Cafe встречает гостей домашними угощениями и тщательно отобранными зёрнами, являясь скрытой жемчужиной рядом с Гранд-базаром.', 'about-body-2': 'Кофе от бутик-обжарщиков, десерты готовятся ежедневно. Каждая чашка рассказывает историю.', 'stat-1': 'Лет', 'stat-2': 'Напитки', 'stat-3': 'Оценка', 'card-title-1': 'Часы работы', 'card-body-1': 'По будням 08:00–18:00. Воскресенье закрыто. Суббота с 09:00.', 'menu-tag': '— Меню', 'menu-title': 'Меню напитков', 'gallery-tag': '— Атмосфера', 'gallery-title': 'День в Piccolo', 'reviews-tag': '— Отзывы', 'reviews-title': 'Что говорят?', 'contact-tag': '— Контакты', 'contact-title': 'Бронирование & Связь', 'contact-body': 'Забронируйте стол для особых мероприятий, дней рождений или деловых встреч.', 'info-addr': 'Адрес', 'info-hours': 'Часы работы', 'res-tag': '— Бронь', 'res-title': 'Забронировать стол', 'f-name': 'Имя', 'f-name-ph': 'Ваше имя...', 'f-phone': 'Телефон', 'f-date': 'Дата', 'f-guests': 'Гости', 'f-g1': '1-2 чел.', 'f-g2': '3-4 чел.', 'f-g3': '5-8 чел.', 'f-g4': '9+ чел.', 'f-note': 'Примечание', 'f-note-ph': 'Особые пожелания...', 'f-submit': 'Забронировать', 'footer-tag': 'История в каждом глотке.', 'footer-rights': 'Все права защищены.', 'footer-made': 'С ❤️ в Стамбуле', 'fl-1': 'Меню', 'fl-1a': 'Горячие напитки', 'fl-1b': 'Холодные напитки', 'fl-2': 'Ссылки', 'fl-2a': 'О нас', 'fl-2c': 'Бронь', 'fl-3': 'Соцсети' },
-            it: { 'nav-about': 'Chi siamo', 'nav-menu': 'Menu', 'nav-gallery': 'Galleria', 'nav-reviews': 'Recensioni', 'nav-contact': 'Contatti', 'hero-tag': '— Dal 2018 a Istanbul', 'hero-title-1': 'Una piccola pausa,', 'hero-title-2': 'grande sapore.', 'hero-sub': 'Senti il calore del caffè appena macinato da Piccolo Cafe. Atmosfera boutique, sapori artigianali.', 'hero-cta1': 'Scopri il menu', 'hero-cta2': 'Contattaci', 'scroll': 'Scorri', 'about-tag': '— La nostra storia', 'about-title-1': 'Piccolo,', 'about-title-2': 'in italiano significa', 'about-title-3': '"piccolo"...', 'about-body-1': 'Dal 2018, Piccolo Cafe accoglie gli ospiti con sapori fatti in casa e chicchi selezionati, un gioiello nascosto proprio accanto al Grand Bazaar.', 'about-body-2': 'I nostri caffè provengono da torrefazioni artigianali, i dolci sono fatti a mano ogni giorno. Ogni tazza racconta una storia.', 'stat-1': 'Anni', 'stat-2': 'Bevande', 'stat-3': 'Voto', 'card-title-1': 'Orari di apertura', 'card-body-1': 'Aperto feriali 08:00–18:00. Domenica chiuso. Sabato dalle 09:00.', 'menu-tag': '— Menu', 'menu-title': 'Menu Bevande', 'gallery-tag': '— Atmosfera', 'gallery-title': 'Un giorno da Piccolo', 'reviews-tag': '— Recensioni', 'reviews-title': 'Cosa dicono?', 'contact-tag': '— Contatti', 'contact-title': 'Prenotazione & Contatto', 'contact-body': 'Prenota un tavolo per eventi speciali, compleanni o riunioni di lavoro.', 'info-addr': 'Indirizzo', 'info-hours': 'Orari', 'res-tag': '— Prenota', 'res-title': 'Prenota un tavolo', 'f-name': 'Nome', 'f-name-ph': 'Il tuo nome...', 'f-phone': 'Telefono', 'f-date': 'Data', 'f-guests': 'Ospiti', 'f-g1': '1-2 Persone', 'f-g2': '3-4 Persone', 'f-g3': '5-8 Persone', 'f-g4': '9+ Persone', 'f-note': 'Nota', 'f-note-ph': 'Richieste speciali...', 'f-submit': 'Prenota', 'footer-tag': 'Una storia in ogni sorso.', 'footer-rights': 'Tutti i diritti riservati.', 'footer-made': 'Fatto con ❤️ a Istanbul', 'fl-1': 'Menu', 'fl-1a': 'Bevande calde', 'fl-1b': 'Bevande fredde', 'fl-2': 'Link', 'fl-2a': 'Chi siamo', 'fl-2c': 'Prenota', 'fl-3': 'Social' }
+            tr: {
+                'nav-about': 'Hakkımızda', 'nav-menu': 'Menü', 'nav-gallery': 'Galeri', 'nav-reviews': 'Yorumlar', 'nav-contact': 'İletişim',
+                'hero-tag': "— 2018'den beri İstanbul", 'hero-title-1': 'Küçük bir mola,', 'hero-title-2': 'büyük bir lezzet.',
+                'hero-sub': "Piccolo Cafe'de her yudumda taze çekilmiş kahvenin sıcaklığını hissedin. Butik atmosfer, el yapımı tatlar.",
+                'hero-cta1': 'Menüyü Keşfet', 'hero-cta2': 'Bize Ulaşın', 'scroll': 'Kaydır',
+                'about-tag': '— Hikayemiz', 'about-title-1': 'Piccolo,', 'about-title-2': 'İtalyanca', 'about-title-3': '"küçük" demek...',
+                'about-body-1': "2018'den beri misafirlerini ev yapımı lezzetler ve özenle seçilmiş çekirdeklerle buluşturan Piccolo Cafe, Kapalıçarşı'nın hemen yanı başında, tarihi dokunun içinde saklı bir hazine olarak hizmet veriyor.",
+                'about-body-2': 'Kahvelerimiz butik kavuruculardan özenle seçilir, tatlılarımız günlük olarak el yapımı hazırlanır. Her fincanda bir hikaye var.',
+                'stat-1': 'Yıl', 'stat-2': 'İçecek', 'stat-3': 'Puan',
+                'card-title-1': 'Çalışma Saatleri', 'card-body-1': "Hafta içi her gün 08:00 – 18:00 arası açığız. Pazarları kapalıyız. Cumartesi 09:00'da açılıyoruz.",
+                'menu-tag': '— Lezzetlerimiz', 'menu-title': 'İçecek Menüsü',
+                'gallery-tag': '— Atmosfer', 'gallery-title': "Piccolo'da Bir Gün",
+                'reviews-tag': '— Müşteri Yorumları', 'reviews-title': 'Onlar Ne Dedi?',
+                'contact-tag': '— Bize Ulaşın', 'contact-title': 'Rezervasyon & İletişim',
+                'contact-body': 'Özel etkinlikleriniz, doğum günleriniz veya iş toplantılarınız için masa rezervasyonu yapabilirsiniz.',
+                'info-addr': 'Adres', 'info-hours': 'Çalışma Saatleri',
+                'res-tag': '— Rezervasyon', 'res-title': 'Masa Ayırt',
+                'f-name': 'Ad Soyad', 'f-name-ph': 'Adınız...', 'f-phone': 'Telefon', 'f-date': 'Tarih', 'f-guests': 'Kişi Sayısı',
+                'f-g1': '1-2 Kişi', 'f-g2': '3-4 Kişi', 'f-g3': '5-8 Kişi', 'f-g4': '9+ Kişi',
+                'f-note': 'Not', 'f-note-ph': 'Özel istekleriniz...', 'f-submit': 'Rezervasyon Yap',
+                'footer-tag': 'Her yudumda bir hikaye.', 'footer-rights': 'Tüm hakları saklıdır.', 'footer-made': 'İstanbul ile ❤️ yapıldı',
+                'fl-1': 'Menü', 'fl-1a': 'Sıcak İçecekler', 'fl-1b': 'Soğuk İçecekler',
+                'fl-2': 'Bağlantılar', 'fl-2a': 'Hakkımızda', 'fl-2c': 'Rezervasyon', 'fl-3': 'Sosyal',
+                'm1-name': 'Espresso', 'm1-desc': 'Yoğun aromalı, klasik İtalyan usulü çift shot espresso.',
+                'm2-name': 'Espresso Macchiato', 'm2-desc': 'Bir damla süt köpüğü ile taçlandırılmış yoğun espresso.',
+                'm3-name': 'Double Espresso', 'm3-desc': 'Çift doz espresso. Ekstra yoğun, ekstra enerjik.',
+                'm4-name': 'Americano', 'm4-desc': 'Espresso üzerine sıcak su eklenerek hazırlanan klasik.',
+                'm5-name': 'Cortado', 'm5-desc': 'Espresso ve az miktarda sıcak sütün dengeli buluşması.',
+                'm6-name': 'Latte', 'm6-desc': 'Kremalı bir dokunuşla espresso ve bol sütün yumuşak dansı.',
+                'm7-name': 'Flat White', 'm7-desc': 'Yoğun ristretto bazlı, mikro-köpük sütle hazırlanan Avustralya klasiği.',
+                'm8-name': 'Cappuccino', 'm8-desc': 'Kadifemsi süt köpüğüyle buluşan espresso, bol köpük ve tarçın.',
+                'm9-name': 'Filter Coffee', 'm9-desc': 'Günün özel çekirdeği ile V60 demleme filtre kahve.',
+                'm10-name': 'Türk Kahvesi', 'm10-desc': 'Bol köpüklü, geleneksel Türk kahvesi. Yanında lokum ikramımızdır.',
+                'm11-name': 'Caffè Mocha', 'm11-desc': 'Espresso, çikolata ve sütün zengin birleşimi.',
+                'm12-name': 'Piccolo Latte', 'm12-desc': 'Küçük ama etkili. Ristretto üzerine ipeksi süt dokunuşu.',
+                'm13-name': 'Vanilla Latte', 'm13-desc': 'Gerçek vanilya özü ile tatlandırılmış kremsi latte.',
+                'm14-name': 'White Chocolate Mocha', 'm14-desc': 'Beyaz çikolata, espresso ve süt. Tatlı bir kaçamak.',
+                'm15-name': 'Caramel Latte', 'm15-desc': 'Ev yapımı karamel sosu ile zenginleştirilmiş latte.',
+                'm16-name': 'Chai Tea Latte', 'm16-desc': 'Baharatlı Hint çayı ve buharlanmış süt ile egzotik bir lezzet.',
+                'm17-name': 'Sıcak Çikolata', 'm17-desc': 'Belçika çikolatası ile hazırlanan yoğun sıcak çikolata.',
+                'm18-name': 'Bitki Çayı', 'm18-desc': 'Mevsimsel olarak değişen özel bitki çayı seçkisi.',
+                'm19-name': 'Extra Espresso Shot', 'm19-desc': 'İçeceğinize ekstra espresso shot ekletmek ister misiniz?',
+                'm20-name': 'Iced Caffè Latte', 'm20-desc': 'Soğuk süt ve buz ile hazırlanan ferahlatıcı latte.',
+                'm21-name': 'Iced Coffee Americano', 'm21-desc': 'Buz üzerine espresso ve soğuk su. Serin ve yoğun.',
+                'm22-name': 'Iced Caramel Latte', 'm22-desc': 'Buz, süt, espresso ve ev yapımı karamel sosu.',
+                'm23-name': 'Iced Caffè Mocha', 'm23-desc': 'Soğuk çikolata ve espresso bir arada. Tatlı ve serin.',
+                'm24-name': 'Iced White Chocolate Mocha', 'm24-desc': 'Beyaz çikolata, espresso ve soğuk süt. Yazın favorisi.',
+                'm25-name': 'Iced Chai Tea Latte', 'm25-desc': 'Soğuk baharatlı Hint çayı ve süt. Egzotik ferahlık.',
+                'm26-name': 'Iced Raspberry', 'm26-desc': 'Taze ahududu püresi ile hazırlanan serin içecek.',
+                't1-text': '"Mekan küçük olmasına rağmen toplantım varken yardımcı oldular. Kahve içtim ve şu ana kadar içtiğim en güzel latte idi. Tam ayarında yaptıklarını düşünüyorum, kesinlikle zincir kahvecilerden farklı, tavsiye ederim."',
+                't2-text': '"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I\'ll be back."',
+                't3-text': '"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."'
+            },
+            en: {
+                'nav-about': 'About', 'nav-menu': 'Menu', 'nav-gallery': 'Gallery', 'nav-reviews': 'Reviews', 'nav-contact': 'Contact',
+                'hero-tag': '— Since 2018 in Istanbul', 'hero-title-1': 'A little break,', 'hero-title-2': 'big flavor.',
+                'hero-sub': 'Feel the warmth of freshly ground coffee with every sip at Piccolo Cafe. Boutique atmosphere, handmade tastes.',
+                'hero-cta1': 'Explore Menu', 'hero-cta2': 'Contact Us', 'scroll': 'Scroll',
+                'about-tag': '— Our Story', 'about-title-1': 'Piccolo,', 'about-title-2': 'means "small"', 'about-title-3': 'in Italian...',
+                'about-body-1': 'Since 2018, Piccolo Cafe has been welcoming guests with homemade flavors and carefully selected beans, serving as a hidden gem right next to the Grand Bazaar.',
+                'about-body-2': 'Our coffees are carefully selected from boutique roasters, our desserts are handmade daily. Every cup tells a story.',
+                'stat-1': 'Years', 'stat-2': 'Drinks', 'stat-3': 'Rating',
+                'card-title-1': 'Working Hours', 'card-body-1': 'Open weekdays 08:00–18:00. Closed on Sundays. Saturdays open at 09:00.',
+                'menu-tag': '— Our Flavors', 'menu-title': 'Drink Menu',
+                'gallery-tag': '— Atmosphere', 'gallery-title': 'A Day at Piccolo',
+                'reviews-tag': '— Customer Reviews', 'reviews-title': 'What They Said?',
+                'contact-tag': '— Get in Touch', 'contact-title': 'Reservation & Contact',
+                'contact-body': 'Make table reservations for special events, birthdays, or business meetings.',
+                'info-addr': 'Address', 'info-hours': 'Working Hours',
+                'res-tag': '— Reservation', 'res-title': 'Book a Table',
+                'f-name': 'Full Name', 'f-name-ph': 'Your name...', 'f-phone': 'Phone', 'f-date': 'Date', 'f-guests': 'Guests',
+                'f-g1': '1-2 People', 'f-g2': '3-4 People', 'f-g3': '5-8 People', 'f-g4': '9+ People',
+                'f-note': 'Note', 'f-note-ph': 'Special requests...', 'f-submit': 'Make Reservation',
+                'footer-tag': 'A story in every sip.', 'footer-rights': 'All rights reserved.', 'footer-made': 'Made with ❤️ in Istanbul',
+                'fl-1': 'Menu', 'fl-1a': 'Hot Drinks', 'fl-1b': 'Cold Drinks',
+                'fl-2': 'Links', 'fl-2a': 'About', 'fl-2c': 'Reservation', 'fl-3': 'Social',
+                'm1-name': 'Espresso', 'm1-desc': 'Rich and aromatic classic Italian double shot espresso.',
+                'm2-name': 'Espresso Macchiato', 'm2-desc': 'Intense espresso crowned with a drop of milk foam.',
+                'm3-name': 'Double Espresso', 'm3-desc': 'Double dose espresso. Extra intense, extra energetic.',
+                'm4-name': 'Americano', 'm4-desc': 'A classic prepared by adding hot water to espresso.',
+                'm5-name': 'Cortado', 'm5-desc': 'A balanced meeting of espresso and a small amount of steamed milk.',
+                'm6-name': 'Latte', 'm6-desc': 'A smooth dance of espresso and plenty of milk with a creamy touch.',
+                'm7-name': 'Flat White', 'm7-desc': 'Intense ristretto-based Australian classic with micro-foam milk.',
+                'm8-name': 'Cappuccino', 'm8-desc': 'Espresso meeting velvety milk foam, rich foam and cinnamon.',
+                'm9-name': 'Filter Coffee', 'm9-desc': 'V60 pour-over filter coffee with the special bean of the day.',
+                'm10-name': 'Turkish Coffee', 'm10-desc': 'Traditional Turkish coffee with rich foam. Served with Turkish delight.',
+                'm11-name': 'Caffè Mocha', 'm11-desc': 'A rich combination of espresso, chocolate, and milk.',
+                'm12-name': 'Piccolo Latte', 'm12-desc': 'Small but effective. Ristretto with a silky milk touch.',
+                'm13-name': 'Vanilla Latte', 'm13-desc': 'Creamy latte sweetened with real vanilla extract.',
+                'm14-name': 'White Chocolate Mocha', 'm14-desc': 'White chocolate, espresso, and milk. A sweet escape.',
+                'm15-name': 'Caramel Latte', 'm15-desc': 'Latte enriched with homemade caramel sauce.',
+                'm16-name': 'Chai Tea Latte', 'm16-desc': 'An exotic flavor with spiced Indian tea and steamed milk.',
+                'm17-name': 'Hot Chocolate', 'm17-desc': 'Rich hot chocolate made with Belgian chocolate.',
+                'm18-name': 'Herbal Tea', 'm18-desc': 'A seasonal selection of special herbal teas.',
+                'm19-name': 'Extra Espresso Shot', 'm19-desc': 'Would you like to add an extra espresso shot to your drink?',
+                'm20-name': 'Iced Caffè Latte', 'm20-desc': 'Refreshing latte prepared with cold milk and ice.',
+                'm21-name': 'Iced Coffee Americano', 'm21-desc': 'Espresso and cold water over ice. Cool and intense.',
+                'm22-name': 'Iced Caramel Latte', 'm22-desc': 'Ice, milk, espresso, and homemade caramel sauce.',
+                'm23-name': 'Iced Caffè Mocha', 'm23-desc': 'Cold chocolate and espresso together. Sweet and cool.',
+                'm24-name': 'Iced White Chocolate Mocha', 'm24-desc': 'White chocolate, espresso, and cold milk. Summer favorite.',
+                'm25-name': 'Iced Chai Tea Latte', 'm25-desc': 'Cold spiced Indian tea and milk. Exotic refreshment.',
+                'm26-name': 'Iced Raspberry', 'm26-desc': 'Cool drink prepared with fresh raspberry puree.',
+                't1-text': '"The place is small but they helped me while I had a meeting. I had coffee and it was the best latte I\'ve ever had. Definitely different from chain coffee shops, highly recommend."',
+                't2-text': '"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I\'ll be back."',
+                't3-text': '"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."'
+            },
+            de: {
+                'nav-about': 'Über uns', 'nav-menu': 'Speisekarte', 'nav-gallery': 'Galerie', 'nav-reviews': 'Bewertungen', 'nav-contact': 'Kontakt',
+                'hero-tag': '— Seit 2018 in Istanbul', 'hero-title-1': 'Eine kleine Pause,', 'hero-title-2': 'großer Geschmack.',
+                'hero-sub': 'Spüren Sie die Wärme frisch gemahlenen Kaffees im Piccolo Cafe. Boutique-Atmosphäre, handgemacht.',
+                'hero-cta1': 'Speisekarte', 'hero-cta2': 'Kontakt', 'scroll': 'Scrollen',
+                'about-tag': '— Unsere Geschichte', 'about-title-1': 'Piccolo,', 'about-title-2': 'bedeutet "klein"', 'about-title-3': 'auf Italienisch...',
+                'about-body-1': 'Seit 2018 empfängt das Piccolo Cafe Gäste mit hausgemachten Leckereien und ausgewählten Bohnen, ein verstecktes Juwel direkt neben dem Großen Basar.',
+                'about-body-2': 'Unsere Kaffees werden sorgfältig von Boutique-Röstern ausgewählt, unsere Desserts täglich handgemacht. Jede Tasse erzählt eine Geschichte.',
+                'stat-1': 'Jahre', 'stat-2': 'Getränke', 'stat-3': 'Bewertung',
+                'card-title-1': 'Öffnungszeiten', 'card-body-1': 'Wochentags 08:00–18:00. Sonntags geschlossen. Samstags ab 09:00.',
+                'menu-tag': '— Unsere Spezialitäten', 'menu-title': 'Getränkekarte',
+                'gallery-tag': '— Atmosphäre', 'gallery-title': 'Ein Tag bei Piccolo',
+                'reviews-tag': '— Kundenbewertungen', 'reviews-title': 'Was Sie sagten?',
+                'contact-tag': '— Kontakt', 'contact-title': 'Reservierung & Kontakt',
+                'contact-body': 'Für besondere Veranstaltungen, Geburtstage oder Geschäftstreffen können Sie einen Tisch reservieren.',
+                'info-addr': 'Adresse', 'info-hours': 'Öffnungszeiten',
+                'res-tag': '— Reservierung', 'res-title': 'Tisch Reservieren',
+                'f-name': 'Name', 'f-name-ph': 'Ihr Name...', 'f-phone': 'Telefon', 'f-date': 'Datum', 'f-guests': 'Gäste',
+                'f-g1': '1-2 Personen', 'f-g2': '3-4 Personen', 'f-g3': '5-8 Personen', 'f-g4': '9+ Personen',
+                'f-note': 'Anmerkung', 'f-note-ph': 'Besondere Wünsche...', 'f-submit': 'Reservieren',
+                'footer-tag': 'Eine Geschichte in jedem Schluck.', 'footer-rights': 'Alle Rechte vorbehalten.', 'footer-made': 'Mit ❤️ in Istanbul gemacht',
+                'fl-1': 'Speisekarte', 'fl-1a': 'Heiße Getränke', 'fl-1b': 'Kalte Getränke',
+                'fl-2': 'Links', 'fl-2a': 'Über uns', 'fl-2c': 'Reservierung', 'fl-3': 'Sozial',
+                'm1-name': 'Espresso', 'm1-desc': 'Aromatischer klassischer italienischer Doppelschuss-Espresso.',
+                'm2-name': 'Espresso Macchiato', 'm2-desc': 'Intensiver Espresso mit einem Tropfen Milchschaum gekrönt.',
+                'm3-name': 'Double Espresso', 'm3-desc': 'Doppelte Dosis Espresso. Extra intensiv, extra energetisch.',
+                'm4-name': 'Americano', 'm4-desc': 'Ein Klassiker, zubereitet durch Zugabe von heißem Wasser zum Espresso.',
+                'm5-name': 'Cortado', 'm5-desc': 'Eine ausgewogene Begegnung von Espresso und wenig aufgeschäumter Milch.',
+                'm6-name': 'Latte', 'm6-desc': 'Ein sanfter Tanz von Espresso und viel Milch mit einer cremigen Note.',
+                'm7-name': 'Flat White', 'm7-desc': 'Intensiver ristretto-basierter australischer Klassiker mit Mikroschaum-Milch.',
+                'm8-name': 'Cappuccino', 'm8-desc': 'Espresso trifft samtigen Milchschaum, reichhaltiger Schaum und Zimt.',
+                'm9-name': 'Filterkaffee', 'm9-desc': 'V60-Handaufguss-Filterkaffee mit der Spezialbohne des Tages.',
+                'm10-name': 'Türkischer Kaffee', 'm10-desc': 'Traditioneller türkischer Kaffee mit reichhaltigem Schaum. Serviert mit Lokum.',
+                'm11-name': 'Caffè Mocha', 'm11-desc': 'Eine reichhaltige Kombination aus Espresso, Schokolade und Milch.',
+                'm12-name': 'Piccolo Latte', 'm12-desc': 'Klein aber effektiv. Ristretto mit einer seidigen Milchnote.',
+                'm13-name': 'Vanilla Latte', 'm13-desc': 'Cremiger Latte, gesüßt mit echtem Vanilleextrakt.',
+                'm14-name': 'White Chocolate Mocha', 'm14-desc': 'Weiße Schokolade, Espresso und Milch. Eine süße Auszeit.',
+                'm15-name': 'Caramel Latte', 'm15-desc': 'Latte, angereichert mit hausgemachter Karamellsauce.',
+                'm16-name': 'Chai Tea Latte', 'm16-desc': 'Ein exotischer Geschmack mit gewürztem indischem Tee und aufgeschäumter Milch.',
+                'm17-name': 'Heiße Schokolade', 'm17-desc': 'Reichhaltige heiße Schokolade aus belgischer Schokolade.',
+                'm18-name': 'Kräutertee', 'm18-desc': 'Eine saisonale Auswahl an speziellen Kräutertees.',
+                'm19-name': 'Extra Espresso Shot', 'm19-desc': 'Möchten Sie Ihrem Getränk einen zusätzlichen Espresso-Shot hinzufügen?',
+                'm20-name': 'Iced Caffè Latte', 'm20-desc': 'Erfrischender Latte, zubereitet mit kalter Milch und Eis.',
+                'm21-name': 'Iced Coffee Americano', 'm21-desc': 'Espresso und kaltes Wasser auf Eis. Kühl und intensiv.',
+                'm22-name': 'Iced Caramel Latte', 'm22-desc': 'Eis, Milch, Espresso und hausgemachte Karamellsauce.',
+                'm23-name': 'Iced Caffè Mocha', 'm23-desc': 'Kalte Schokolade und Espresso zusammen. Süß und kühl.',
+                'm24-name': 'Iced White Chocolate Mocha', 'm24-desc': 'Weiße Schokolade, Espresso und kalte Milch. Sommerfavorit.',
+                'm25-name': 'Iced Chai Tea Latte', 'm25-desc': 'Kalter gewürzter indischer Tee und Milch. Exotische Erfrischung.',
+                'm26-name': 'Iced Raspberry', 'm26-desc': 'Kühles Getränk, zubereitet mit frischem Himbeerpüree.',
+                't1-text': '"Das Café ist klein, aber sie haben mir während eines Meetings geholfen. Der Kaffee war der beste Latte, den ich je getrunken habe. Definitiv anders als Kettencafés, sehr zu empfehlen."',
+                't2-text': '"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I\'ll be back."',
+                't3-text': '"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."'
+            },
+            ru: {
+                'nav-about': 'О нас', 'nav-menu': 'Меню', 'nav-gallery': 'Галерея', 'nav-reviews': 'Отзывы', 'nav-contact': 'Контакты',
+                'hero-tag': '— С 2018 года в Стамбуле', 'hero-title-1': 'Маленький перерыв,', 'hero-title-2': 'большой вкус.',
+                'hero-sub': 'Почувствуйте тепло свежесваренного кофе в Piccolo Cafe. Бутик-атмосфера, ручная работа.',
+                'hero-cta1': 'Меню', 'hero-cta2': 'Контакты', 'scroll': 'Скролл',
+                'about-tag': '— Наша история', 'about-title-1': 'Piccolo,', 'about-title-2': 'по-итальянски', 'about-title-3': '"маленький"...',
+                'about-body-1': 'С 2018 года Piccolo Cafe встречает гостей домашними угощениями и тщательно отобранными зёрнами, являясь скрытой жемчужиной рядом с Гранд-базаром.',
+                'about-body-2': 'Кофе от бутик-обжарщиков, десерты готовятся ежедневно. Каждая чашка рассказывает историю.',
+                'stat-1': 'Лет', 'stat-2': 'Напитки', 'stat-3': 'Оценка',
+                'card-title-1': 'Часы работы', 'card-body-1': 'По будням 08:00–18:00. Воскресенье закрыто. Суббота с 09:00.',
+                'menu-tag': '— Меню', 'menu-title': 'Меню напитков',
+                'gallery-tag': '— Атмосфера', 'gallery-title': 'День в Piccolo',
+                'reviews-tag': '— Отзывы', 'reviews-title': 'Что говорят?',
+                'contact-tag': '— Контакты', 'contact-title': 'Бронирование & Связь',
+                'contact-body': 'Забронируйте стол для особых мероприятий, дней рождений или деловых встреч.',
+                'info-addr': 'Адрес', 'info-hours': 'Часы работы',
+                'res-tag': '— Бронь', 'res-title': 'Забронировать стол',
+                'f-name': 'Имя', 'f-name-ph': 'Ваше имя...', 'f-phone': 'Телефон', 'f-date': 'Дата', 'f-guests': 'Гости',
+                'f-g1': '1-2 чел.', 'f-g2': '3-4 чел.', 'f-g3': '5-8 чел.', 'f-g4': '9+ чел.',
+                'f-note': 'Примечание', 'f-note-ph': 'Особые пожелания...', 'f-submit': 'Забронировать',
+                'footer-tag': 'История в каждом глотке.', 'footer-rights': 'Все права защищены.', 'footer-made': 'С ❤️ в Стамбуле',
+                'fl-1': 'Меню', 'fl-1a': 'Горячие напитки', 'fl-1b': 'Холодные напитки',
+                'fl-2': 'Ссылки', 'fl-2a': 'О нас', 'fl-2c': 'Бронь', 'fl-3': 'Соцсети',
+                'm1-name': 'Эспрессо', 'm1-desc': 'Насыщенный ароматный классический итальянский двойной эспрессо.',
+                'm2-name': 'Эспрессо Маккиато', 'm2-desc': 'Интенсивный эспрессо, увенчанный каплей молочной пенки.',
+                'm3-name': 'Двойной Эспрессо', 'm3-desc': 'Двойная доза эспрессо. Экстра интенсивный, экстра энергичный.',
+                'm4-name': 'Американо', 'm4-desc': 'Классика, приготовленная путём добавления горячей воды в эспрессо.',
+                'm5-name': 'Кортадо', 'm5-desc': 'Сбалансированная встреча эспрессо и небольшого количества вспененного молока.',
+                'm6-name': 'Латте', 'm6-desc': 'Мягкий танец эспрессо и большого количества молока со сливочным оттенком.',
+                'm7-name': 'Флэт Уайт', 'm7-desc': 'Интенсивная австралийская классика на основе ристретто с микропеной молока.',
+                'm8-name': 'Капучино', 'm8-desc': 'Эспрессо встречается с бархатистой молочной пенкой, обильная пенка и корица.',
+                'm9-name': 'Фильтр-кофе', 'm9-desc': 'Фильтр-кофе V60 ручного пролива с фирменным зерном дня.',
+                'm10-name': 'Турецкий кофе', 'm10-desc': 'Традиционный турецкий кофе с густой пенкой. Подаётся с рахат-лукумом.',
+                'm11-name': 'Кофе Мокка', 'm11-desc': 'Богатое сочетание эспрессо, шоколада и молока.',
+                'm12-name': 'Пикколо Латте', 'm12-desc': 'Маленький, но эффективный. Ристретто с шелковистым молочным прикосновением.',
+                'm13-name': 'Ванильный Латте', 'm13-desc': 'Сливочный латте, подслащённый настоящим ванильным экстрактом.',
+                'm14-name': 'Белый Шоколад Мокка', 'm14-desc': 'Белый шоколад, эспрессо и молоко. Сладкий побег.',
+                'm15-name': 'Карамельный Латте', 'm15-desc': 'Латте, обогащённый домашним карамельным соусом.',
+                'm16-name': 'Чай Латте со Специями', 'm16-desc': 'Экзотический вкус пряного индийского чая и вспененного молока.',
+                'm17-name': 'Горячий Шоколад', 'm17-desc': 'Насыщенный горячий шоколад из бельгийского шоколада.',
+                'm18-name': 'Травяной Чай', 'm18-desc': 'Сезонный выбор специальных травяных чаёв.',
+                'm19-name': 'Доп. Эспрессо Шот', 'm19-desc': 'Хотите добавить дополнительный шот эспрессо в ваш напиток?',
+                'm20-name': 'Айс Латте', 'm20-desc': 'Освежающий латте, приготовленный с холодным молоком и льдом.',
+                'm21-name': 'Айс Американо', 'm21-desc': 'Эспрессо и холодная вода со льдом. Прохладно и интенсивно.',
+                'm22-name': 'Айс Карамельный Латте', 'm22-desc': 'Лёд, молоко, эспрессо и домашний карамельный соус.',
+                'm23-name': 'Айс Мокка', 'm23-desc': 'Холодный шоколад и эспрессо вместе. Сладко и прохладно.',
+                'm24-name': 'Айс Белый Шоколад Мокка', 'm24-desc': 'Белый шоколад, эспрессо и холодное молоко. Летний фаворит.',
+                'm25-name': 'Айс Чай Латте со Специями', 'm25-desc': 'Холодный пряный индийский чай и молоко. Экзотическое освежение.',
+                'm26-name': 'Айс Малина', 'm26-desc': 'Прохладный напиток, приготовленный из свежего малинового пюре.',
+                't1-text': '"Место небольшое, но мне помогли во время встречи. Кофе был лучшим латте, который я когда-либо пробовал. Определённо отличается от сетевых кофеен, очень рекомендую."',
+                't2-text': '"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I\'ll be back."',
+                't3-text': '"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."'
+            },
+            it: {
+                'nav-about': 'Chi siamo', 'nav-menu': 'Menu', 'nav-gallery': 'Galleria', 'nav-reviews': 'Recensioni', 'nav-contact': 'Contatti',
+                'hero-tag': '— Dal 2018 a Istanbul', 'hero-title-1': 'Una piccola pausa,', 'hero-title-2': 'grande sapore.',
+                'hero-sub': 'Senti il calore del caffè appena macinato da Piccolo Cafe. Atmosfera boutique, sapori artigianali.',
+                'hero-cta1': 'Scopri il menu', 'hero-cta2': 'Contattaci', 'scroll': 'Scorri',
+                'about-tag': '— La nostra storia', 'about-title-1': 'Piccolo,', 'about-title-2': 'in italiano significa', 'about-title-3': '"piccolo"...',
+                'about-body-1': 'Dal 2018, Piccolo Cafe accoglie gli ospiti con sapori fatti in casa e chicchi selezionati, un gioiello nascosto proprio accanto al Grand Bazaar.',
+                'about-body-2': 'I nostri caffè provengono da torrefazioni artigianali, i dolci sono fatti a mano ogni giorno. Ogni tazza racconta una storia.',
+                'stat-1': 'Anni', 'stat-2': 'Bevande', 'stat-3': 'Voto',
+                'card-title-1': 'Orari di apertura', 'card-body-1': 'Aperto feriali 08:00–18:00. Domenica chiuso. Sabato dalle 09:00.',
+                'menu-tag': '— Menu', 'menu-title': 'Menu Bevande',
+                'gallery-tag': '— Atmosfera', 'gallery-title': 'Un giorno da Piccolo',
+                'reviews-tag': '— Recensioni', 'reviews-title': 'Cosa dicono?',
+                'contact-tag': '— Contatti', 'contact-title': 'Prenotazione & Contatto',
+                'contact-body': 'Prenota un tavolo per eventi speciali, compleanni o riunioni di lavoro.',
+                'info-addr': 'Indirizzo', 'info-hours': 'Orari',
+                'res-tag': '— Prenota', 'res-title': 'Prenota un tavolo',
+                'f-name': 'Nome', 'f-name-ph': 'Il tuo nome...', 'f-phone': 'Telefono', 'f-date': 'Data', 'f-guests': 'Ospiti',
+                'f-g1': '1-2 Persone', 'f-g2': '3-4 Persone', 'f-g3': '5-8 Persone', 'f-g4': '9+ Persone',
+                'f-note': 'Nota', 'f-note-ph': 'Richieste speciali...', 'f-submit': 'Prenota',
+                'footer-tag': 'Una storia in ogni sorso.', 'footer-rights': 'Tutti i diritti riservati.', 'footer-made': 'Fatto con ❤️ a Istanbul',
+                'fl-1': 'Menu', 'fl-1a': 'Bevande calde', 'fl-1b': 'Bevande fredde',
+                'fl-2': 'Link', 'fl-2a': 'Chi siamo', 'fl-2c': 'Prenota', 'fl-3': 'Social',
+                'm1-name': 'Espresso', 'm1-desc': 'Espresso doppio classico italiano, ricco e aromatico.',
+                'm2-name': 'Espresso Macchiato', 'm2-desc': 'Espresso intenso coronato con una goccia di schiuma di latte.',
+                'm3-name': 'Doppio Espresso', 'm3-desc': 'Dose doppia di espresso. Extra intenso, extra energetico.',
+                'm4-name': 'Americano', 'm4-desc': 'Un classico preparato aggiungendo acqua calda all\'espresso.',
+                'm5-name': 'Cortado', 'm5-desc': 'Un incontro equilibrato di espresso e una piccola quantità di latte montato.',
+                'm6-name': 'Latte', 'm6-desc': 'Una morbida danza di espresso e abbondante latte con un tocco cremoso.',
+                'm7-name': 'Flat White', 'm7-desc': 'Classico australiano intenso a base di ristretto con microschiuma di latte.',
+                'm8-name': 'Cappuccino', 'm8-desc': 'Espresso che incontra una vellutata schiuma di latte, ricca schiuma e cannella.',
+                'm9-name': 'Caffè Filtro', 'm9-desc': 'Caffè filtro V60 pour-over con il chicco speciale del giorno.',
+                'm10-name': 'Caffè Turco', 'm10-desc': 'Caffè turco tradizionale con ricca schiuma. Servito con lokum.',
+                'm11-name': 'Caffè Mocha', 'm11-desc': 'Una ricca combinazione di espresso, cioccolato e latte.',
+                'm12-name': 'Piccolo Latte', 'm12-desc': 'Piccolo ma efficace. Ristretto con un tocco setoso di latte.',
+                'm13-name': 'Latte alla Vaniglia', 'm13-desc': 'Latte cremoso dolcificato con vero estratto di vaniglia.',
+                'm14-name': 'Mocha al Cioccolato Bianco', 'm14-desc': 'Cioccolato bianco, espresso e latte. Una dolce fuga.',
+                'm15-name': 'Latte al Caramello', 'm15-desc': 'Latte arricchito con salsa al caramello fatta in casa.',
+                'm16-name': 'Chai Tea Latte', 'm16-desc': 'Un sapore esotico con tè indiano speziato e latte montato.',
+                'm17-name': 'Cioccolata Calda', 'm17-desc': 'Ricca cioccolata calda fatta con cioccolato belga.',
+                'm18-name': 'Tisana', 'm18-desc': 'Una selezione stagionale di tisane speciali.',
+                'm19-name': 'Shot Extra di Espresso', 'm19-desc': 'Vuoi aggiungere uno shot extra di espresso alla tua bevanda?',
+                'm20-name': 'Iced Caffè Latte', 'm20-desc': 'Latte rinfrescante preparato con latte freddo e ghiaccio.',
+                'm21-name': 'Iced Coffee Americano', 'm21-desc': 'Espresso e acqua fredda sul ghiaccio. Fresco e intenso.',
+                'm22-name': 'Iced Caramel Latte', 'm22-desc': 'Ghiaccio, latte, espresso e salsa al caramello fatta in casa.',
+                'm23-name': 'Iced Caffè Mocha', 'm23-desc': 'Cioccolato freddo ed espresso insieme. Dolce e fresco.',
+                'm24-name': 'Iced White Chocolate Mocha', 'm24-desc': 'Cioccolato bianco, espresso e latte freddo. Preferito dell\'estate.',
+                'm25-name': 'Iced Chai Tea Latte', 'm25-desc': 'Tè indiano speziato freddo e latte. Rinfresco esotico.',
+                'm26-name': 'Iced Raspberry', 'm26-desc': 'Bevanda fresca preparata con purea di lamponi freschi.',
+                't1-text': '"Il locale è piccolo ma mi hanno aiutato durante una riunione. Il caffè era il miglior latte che abbia mai bevuto. Decisamente diverso dalle catene di caffetterie, lo consiglio vivamente."',
+                't2-text': '"This place is a hidden gem, 100% Italian style quality coffee ☕️❤️ Thanks Alp for this experience, I\'ll be back."',
+                't3-text': '"It is the best coffee shop in Grandbazaar area. I would always recommend, if you are near the area you should definitely drop by."'
+            }
         };
+
         let currentLang = 'tr';
+
         function setLang(lang) {
             currentLang = lang;
             const t = i18n[lang] || i18n['en'];
@@ -229,22 +1423,115 @@
             document.querySelectorAll('[data-i18n-ph]').forEach(el => { const k = el.getAttribute('data-i18n-ph'); if (t[k]) el.placeholder = t[k]; });
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
             document.documentElement.lang = lang;
+            renderMenu();
+            renderTestimonials();
         }
-        const cursor = document.getElementById('cursor'), ring = document.getElementById('cursorRing'); let mx = 0, my = 0, rx = 0, ry = 0;
-        if (window.innerWidth > 1024) { document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = (mx - 6) + 'px'; cursor.style.top = (my - 6) + 'px'; }); function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = (rx - 18) + 'px'; ring.style.top = (ry - 18) + 'px'; requestAnimationFrame(animRing); } animRing(); }
-        const hamburger = document.getElementById('hamburger'), navLinks = document.getElementById('navLinks'); hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); navLinks.classList.toggle('active'); }); navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('active'); navLinks.classList.remove('active'); }));
-        const glowSVG = document.getElementById('glowLineSVG'); let lastScroll = 0, glowOffset = 0; window.addEventListener('scroll', () => { const sy = window.scrollY; glowOffset -= (sy - lastScroll) * 2; glowSVG.style.transform = `translateX(${glowOffset % 700}px)`; lastScroll = sy; document.getElementById('navbar').classList.toggle('scrolled', sy > 60); });
-        const slides = document.querySelectorAll('.bg-slide'); let curSlide = 0; setInterval(() => { slides[curSlide].classList.remove('active'); curSlide = (curSlide + 1) % slides.length; slides[curSlide].classList.add('active'); }, 5000);
-        const pCont = document.getElementById('particles'); for (let i = 0; i < 40; i++) { const p = document.createElement('div'); p.className = 'particle'; p.style.cssText = `left:${Math.random() * 100}%;--dur:${6 + Math.random() * 12}s;--delay:${Math.random() * 12}s;--dx:${(Math.random() - 0.5) * 80}px;width:${1 + Math.random() * 2}px;height:${1 + Math.random() * 2}px`; pCont.appendChild(p); }
-        const observer = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.12 }); document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function renderMenu() {
+            const t = i18n[currentLang] || i18n['en'];
+            let html = '';
+            for (let i = 1; i <= 26; i++) {
+                const nameKey = 'm' + i + '-name';
+                const descKey = 'm' + i + '-desc';
+                html += `<div class="menu-item reveal"><h3 class="item-name">${t[nameKey] || ''}</h3><p class="item-desc">${t[descKey] || ''}</p></div>`;
+            }
+            document.getElementById('menuGrid').innerHTML = html;
+            const observer = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.12 });
+            document.querySelectorAll('#menuGrid .reveal').forEach(el => observer.observe(el));
+        }
+
+        function renderTestimonials() {
+            const t = i18n[currentLang] || i18n['en'];
+            const authors = [
+                { avatar: 'AÇ', name: 'Ahmet Can Çakar', stars: '★★★★★' },
+                { avatar: 'MF', name: 'Manuel Figus', stars: '★★★★★' },
+                { avatar: 'ST', name: 'Siraç Topaloğlu', stars: '★★★★★' }
+            ];
+            let html = '';
+            for (let i = 1; i <= 3; i++) {
+                const textKey = 't' + i + '-text';
+                const author = authors[i - 1];
+                html += `<div class="testimonial-card reveal"><div class="stars">${author.stars}</div><p class="testimonial-quote">"</p><p class="testimonial-text">${t[textKey] || ''}</p><div class="testimonial-author"><div class="author-avatar">${author.avatar}</div><div><div class="author-name">${author.name}</div><div class="stars" style="font-size:10px;">${author.stars}</div></div></div></div>`;
+            }
+            document.getElementById('testimonialsGrid').innerHTML = html;
+            const observer = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.12 });
+            document.querySelectorAll('#testimonialsGrid .reveal').forEach(el => observer.observe(el));
+        }
+
+        renderMenu();
+        renderTestimonials();
+        setLang('tr');
+
+        const cursor = document.getElementById('cursor'),
+            ring = document.getElementById('cursorRing');
+        let mx = 0,
+            my = 0,
+            rx = 0,
+            ry = 0;
+        if (window.innerWidth > 1024) { document.addEventListener('mousemove', e => { mx = e.clientX;
+                my = e.clientY;
+                cursor.style.left = (mx - 6) + 'px';
+                cursor.style.top = (my - 6) + 'px'; });
+
+            function animRing() { rx += (mx - rx) * 0.12;
+                ry += (my - ry) * 0.12;
+                ring.style.left = (rx - 18) + 'px';
+                ring.style.top = (ry - 18) + 'px';
+                requestAnimationFrame(animRing); }
+            animRing(); }
+        const hamburger = document.getElementById('hamburger'),
+            navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => { hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active'); });
+        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { hamburger.classList.remove('active');
+            navLinks.classList.remove('active'); }));
+        const glowSVG = document.getElementById('glowLineSVG');
+        let lastScroll = 0,
+            glowOffset = 0;
+        window.addEventListener('scroll', () => { const sy = window.scrollY;
+            glowOffset -= (sy - lastScroll) * 2;
+            glowSVG.style.transform = `translateX(${glowOffset % 700}px)`;
+            lastScroll = sy;
+            document.getElementById('navbar').classList.toggle('scrolled', sy > 60); });
+        const slides = document.querySelectorAll('.bg-slide');
+        let curSlide = 0;
+        setInterval(() => { slides[curSlide].classList.remove('active');
+            curSlide = (curSlide + 1) % slides.length;
+            slides[curSlide].classList.add('active'); }, 5000);
+        const pCont = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) { const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.cssText = `left:${Math.random()*100}%;--dur:${6+Math.random()*12}s;--delay:${Math.random()*12}s;--dx:${(Math.random()-0.5)*80}px;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
+            pCont.appendChild(p); }
+        const observer = new IntersectionObserver(entries => { entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); }); }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         const galleryImages1 = [{ url: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&auto=format&fit=crop', label: 'Espresso' }, { url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&auto=format&fit=crop', label: 'İç Mekan' }, { url: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=400&auto=format&fit=crop', label: 'Latte Art' }, { url: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&auto=format&fit=crop', label: 'Barista' }, { url: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400&auto=format&fit=crop', label: 'Kahve Keyfi' }, { url: 'https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=400&auto=format&fit=crop', label: 'Çekirdek' }, { url: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&auto=format&fit=crop', label: 'Fincan' }, { url: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&auto=format&fit=crop', label: 'Mekan' }];
         const galleryImages2 = [{ url: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?w=400&auto=format&fit=crop', label: 'Cold Brew' }, { url: 'https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=400&auto=format&fit=crop', label: 'V60' }, { url: 'https://images.unsplash.com/photo-1512568400610-62da28bc8a13?w=400&auto=format&fit=crop', label: 'Dripper' }, { url: 'https://images.unsplash.com/photo-1507133750040-4a8f570215e2?w=400&auto=format&fit=crop', label: 'Ödül' }, { url: 'https://images.unsplash.com/photo-1524350876685-274059332603?w=400&auto=format&fit=crop', label: 'Cheesecake' }, { url: 'https://images.unsplash.com/photo-1467189386127-c0e31e34e32b?w=400&auto=format&fit=crop', label: 'Filtre' }, { url: 'https://images.unsplash.com/photo-1458817614731-e6f5b1b2e7c7?w=400&auto=format&fit=crop', label: 'Ahşap' }, { url: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=400&auto=format&fit=crop', label: 'Köşe' }];
-        function buildGalleryTrack(id, images) { const track = document.getElementById(id); const doubled = [...images, ...images]; track.innerHTML = doubled.map(img => `<div class="gallery-card"><img src="${img.url}" alt="${img.label}" loading="lazy" onerror="this.parentElement.style.display='none'"><span class="gallery-label">${img.label}</span></div>`).join(''); }
-        buildGalleryTrack('galleryTrack1', galleryImages1); buildGalleryTrack('galleryTrack2', galleryImages2);
-        const fabMain = document.getElementById('fabMain'), fabSub = document.getElementById('fabSub'); let fabOpen = false; fabMain.addEventListener('click', () => { fabOpen = !fabOpen; fabMain.classList.toggle('open', fabOpen); fabSub.classList.toggle('open', fabOpen); document.getElementById('fabIcon').innerHTML = fabOpen ? `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>` : `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`; });
-        const counters = document.querySelectorAll('.stat-num'); const cObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting && !e.target.dataset.animated) { e.target.dataset.animated = true; const target = parseFloat(e.target.textContent), suffix = e.target.textContent.replace(/[0-9.]/g, ''); let cur = 0, inc = target / 60; const tmr = setInterval(() => { cur = Math.min(cur + inc, target); e.target.textContent = (Number.isInteger(target) ? Math.round(cur) : cur.toFixed(1)) + suffix; if (cur >= target) clearInterval(tmr); }, 25); } }); }, { threshold: 0.5 }); counters.forEach(c => cObs.observe(c));
-        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const tgt = document.querySelector(a.getAttribute('href')); if (tgt) { e.preventDefault(); tgt.scrollIntoView({ behavior: 'smooth' }); } }));
-        document.querySelector('.btn-primary[data-i18n="f-submit"]')?.addEventListener('click', () => { const btn = document.querySelector('[data-i18n="f-submit"]'); const orig = btn.textContent; btn.textContent = '✓ ' + (currentLang === 'tr' ? 'Gönderildi!' : currentLang === 'en' ? 'Sent!' : currentLang === 'de' ? 'Gesendet!' : currentLang === 'ru' ? 'Отправлено!' : 'Inviato!'); btn.style.background = 'linear-gradient(135deg, #4a7c59, #2d5a3d)'; setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 3000); });
+
+        function buildGalleryTrack(id, images) { const track = document.getElementById(id); const doubled = [...images, ...images];
+            track.innerHTML = doubled.map(img => `<div class="gallery-card"><img src="${img.url}" alt="${img.label}" loading="lazy" onerror="this.parentElement.style.display='none'"><span class="gallery-label">${img.label}</span></div>`).join(''); }
+        buildGalleryTrack('galleryTrack1', galleryImages1);
+        buildGalleryTrack('galleryTrack2', galleryImages2);
+        const fabMain = document.getElementById('fabMain'),
+            fabSub = document.getElementById('fabSub');
+        let fabOpen = false;
+        fabMain.addEventListener('click', () => { fabOpen = !fabOpen;
+            fabMain.classList.toggle('open', fabOpen);
+            fabSub.classList.toggle('open', fabOpen);
+            document.getElementById('fabIcon').innerHTML = fabOpen ? `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>` : `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`; });
+        const counters = document.querySelectorAll('.stat-num');
+        const cObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting && !e.target.dataset.animated) { e.target.dataset.animated = true; const target = parseFloat(e.target.textContent),
+                            suffix = e.target.textContent.replace(/[0-9.]/g, ''); let cur = 0,
+                            inc = target / 60; const tmr = setInterval(() => { cur = Math.min(cur + inc, target);
+                            e.target.textContent = (Number.isInteger(target) ? Math.round(cur) : cur.toFixed(1)) + suffix; if (cur >= target) clearInterval(tmr); }, 25); } }); }, { threshold: 0.5 });
+        counters.forEach(c => cObs.observe(c));
+        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const tgt = document.querySelector(a.getAttribute('href')); if (tgt) { e.preventDefault();
+                tgt.scrollIntoView({ behavior: 'smooth' }); } }));
+        document.querySelector('.btn-primary[data-i18n="f-submit"]')?.addEventListener('click', () => { const btn = document.querySelector('[data-i18n="f-submit"]'); const orig = btn.textContent;
+            btn.textContent = '✓ ' + (currentLang === 'tr' ? 'Gönderildi!' : currentLang === 'en' ? 'Sent!' : currentLang === 'de' ? 'Gesendet!' : currentLang === 'ru' ? 'Отправлено!' : 'Inviato!');
+            btn.style.background = 'linear-gradient(135deg, #4a7c59, #2d5a3d)';
+            setTimeout(() => { btn.textContent = orig;
+                btn.style.background = ''; }, 3000); });
     </script>
 </body>
 </html>
